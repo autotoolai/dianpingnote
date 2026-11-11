@@ -1,0 +1,115 @@
+/**
+ * 演示站专用样式。
+ *
+ * 只加横幅样式和一个区分标识，不改动产品原有样式表 app.css，
+ * 避免影响真实客户端。
+ */
+
+/* ---------- 顶部演示横幅 ---------- */
+
+.demo-banner {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 8px 16px;
+  background: linear-gradient(90deg, #1d4ed8 0%, #2563eb 55%, #3b82f6 100%);
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.5;
+  box-shadow: 0 1px 6px rgba(15, 23, 42, 0.18);
+}
+
+.demo-banner-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  flex: 0 0 auto;
+}
+
+.demo-banner-text {
+  flex: 1 1 320px;
+  min-width: 0;
+}
+
+.demo-banner-link {
+  flex: 0 0 auto;
+  padding: 3px 12px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.demo-banner-link:hover {
+  background: rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+
+/* ---------- 产品外壳让出横幅高度 ---------- */
+
+body {
+  padding-top: 0;
+}
+
+/* ---------- 演示角标：页面右下角 ---------- */
+
+.demo-corner {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.86);
+  color: #e2e8f0;
+  font-size: 12px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.28);
+  backdrop-filter: blur(6px);
+}
+
+.demo-corner-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.22);
+}
+
+.demo-corner a {
+  color: #93c5fd;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.demo-corner a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 720px) {
+  .demo-banner {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+  .demo-corner {
+    right: 10px;
+    bottom: 10px;
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+}

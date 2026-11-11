@@ -159,6 +159,8 @@ description: 点评笔记助手是给门店运营用的 Windows 软件：把同�
   <p style="margin-top: 1.6rem">
     <a class="zp-btn zp-btn--ghost" href="/screenshots">看看真实界面</a>
     &nbsp;
+    <a class="zp-btn zp-btn--demo" href="/demo/" target="_blank" rel="noopener">在线体验</a>
+    &nbsp;
     <a class="zp-btn zp-btn--ghost" href="/faq">看看常见问题</a>
   </p>
 </section>

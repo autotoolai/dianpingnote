@@ -8,6 +8,10 @@
 /faq/ /faq 301
 /about/ /about 301
 
+# 界面演示站（public/demo/ 是构建产物，静态托管在 /demo/ 下）
+/demo/ /demo/index.html 200
+/demo /demo/index.html 200
+
 # 旧文案别名
 /dianpingnote / 301
 

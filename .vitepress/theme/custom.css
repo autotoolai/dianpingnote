@@ -336,6 +336,35 @@ body {
   color: var(--dpn-accent-deep) !important;
 }
 
+/* 「在线体验」：蓝色实心，区别于橙色主行动，一眼看出是演示入口 */
+.zp-btn--demo {
+  background: linear-gradient(90deg, #1d4ed8, #3b82f6);
+  color: #fff !important;
+  box-shadow: 0 10px 26px rgba(29, 78, 216, 0.24);
+}
+
+.zp-btn--demo:hover {
+  background: #1e40af;
+}
+
+.zp-btn--lg {
+  padding: 1rem 2rem;
+  font-size: 1.05rem;
+}
+
+/* 演示站入口区块 */
+.zp-demo-entry {
+  margin: 2rem 0;
+  padding: 1.6rem 1.8rem;
+  border-radius: 16px;
+  border: 1px solid var(--dpn-line-soft);
+  background: var(--dpn-paper-2);
+}
+
+.zp-demo-entry .zp-hint {
+  margin-top: 0.9rem;
+}
+
 /* 第三级行动：文字链，不与前两个按钮抢注意力 */
 .zp-link {
   font-weight: 600;

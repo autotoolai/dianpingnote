@@ -24,6 +24,7 @@ const hasContact = computed(() => href.value.length > 0)
         <div class="zp-cta-row">
           <a class="zp-btn zp-btn--primary" :href="hasContact ? href : '/get-started'">先试 7 天</a>
           <a class="zp-btn zp-btn--ghost" href="/screenshots">看看真实界面</a>
+          <a class="zp-btn zp-btn--demo" href="/demo/" target="_blank" rel="noopener">在线体验</a>
           <a class="zp-link" href="/pricing">1 条 1 元起，按发出去的条数算 →</a>
         </div>
         <p class="zp-hint">首次打开自动获得 7 天试用和 10 条额度，不需要显卡，也不用先买。</p>

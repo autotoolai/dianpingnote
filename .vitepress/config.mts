@@ -148,6 +148,7 @@ export default defineConfig({
       { text: '二创', link: '/erchuang' },
       { text: '发布', link: '/publish' },
       { text: '界面一览', link: '/screenshots' },
+      { text: '在线体验', link: '/online-demo' },
       { text: '价格', link: '/pricing' },
       { text: '帮助中心', link: '/guides/getting-started' },
       { text: '常见问题', link: '/faq' },
