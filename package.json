@@ -1,0 +1,16 @@
+{
+  "name": "dianpingnote-website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev",
+    "prebuild": "node scripts/build_seo.mjs --stage src",
+    "build": "vitepress build",
+    "postbuild": "node scripts/build_seo.mjs --stage dist",
+    "preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.4",
+    "vitepress-plugin-llms": "^1.14.0"
+  }
+}

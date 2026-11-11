@@ -1,0 +1,17 @@
+# 带斜杠 → 去斜杠，统一到 cleanUrls
+/collect/ /collect 301
+/erchuang/ /erchuang 301
+/publish/ /publish 301
+/screenshots/ /screenshots 301
+/pricing/ /pricing 301
+/get-started/ /get-started 301
+/faq/ /faq 301
+/about/ /about 301
+
+# 旧文案别名
+/dianpingnote / 301
+
+# 百度站点验证：Pages 的 cleanUrls 会把 .html 308 跳到无扩展名路径，
+# 而百度只认带 .html 的原始文件名。这里用 200 改写绕过跳转，直接吐验证码。
+# public/ 下需同时放同名 .html 与无扩展名两份。
+/baidu_verify_codeva-i7KL8mMjBP.html /baidu_verify_codeva-i7KL8mMjBP 200

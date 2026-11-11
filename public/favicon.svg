@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="点评笔记助手">
+  <title>点评笔记助手</title>
+  <defs>
+    <linearGradient id="dpnBg" x1="6" y1="4" x2="58" y2="60" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#1D4ED8"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="15" fill="url(#dpnBg)"/>
+  <rect x="18" y="14" width="24" height="30" rx="4" fill="#fff" fill-opacity=".96"/>
+  <path d="M23 24h14M23 30h14M23 36h8" stroke="#1D4ED8" stroke-width="2.4" stroke-linecap="round" opacity=".4"/>
+  <path d="M44.5 45.5c.3-5.6 1.6-10 4.3-13.1 1.7-2 2.2-3.4 1.1-4.4-.9-.8-2.7-.2-4.2 1.7-2.3 2.8-4 7.4-4.8 13.4" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M46.4 23.6l3.3-3.7 1.7 4.3-4.5.6z" fill="#FBBF24"/>
+</svg>
