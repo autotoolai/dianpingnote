@@ -1245,7 +1245,8 @@ function handleDynamic(method, path, qs) {
 }
 
 /* ------------------------------------------------------------------ */
-/* 静态资源基址：demo.js 自身所在目录，媒体与下载文件都从这里取        */
+/* 视频：<video src> 由浏览器直接加载，不经过 fetch 拦截，             */
+/* 所以这里既提供 302，也用 MutationObserver 把 src 改写成静态媒体。   */
 /* ------------------------------------------------------------------ */
 
 /** 占位图：<img src="/api/..."> 不走 fetch，统一替换成内联 SVG */
@@ -1258,6 +1259,24 @@ const IMAGE_PLACEHOLDER =
   )
 
 let BASE = '/'
+
+/**
+ * 浏览器能不能播 H.264。
+ * Chromium 的开源版不带 H.264 解码器，Playwright 自带的就是这种；
+ * 部分 Linux 浏览器同样没有。探测不到就用 VP9 的 webm。
+ */
+let MP4_SUPPORTED = true
+
+function detectMp4Support() {
+  try {
+    const v = document.createElement('video')
+    if (!v.canPlayType) return
+    // 空字符串表示不支持；'maybe' 也按不支持处理（实测 Chromium 返回空）
+    MP4_SUPPORTED = v.canPlayType('video/mp4; codecs="avc1.42E01E"') !== ''
+  } catch (_) {
+    MP4_SUPPORTED = true
+  }
+}
 
 function resolveBase() {
   const s = document.currentScript
@@ -1276,7 +1295,8 @@ function resolveBase() {
 /* ------------------------------------------------------------------ */
 
 function mediaUrl(kind) {
-  return `${BASE}media/sample-${kind}.mp4`
+  const ext = MP4_SUPPORTED ? 'mp4' : 'webm'
+  return `${BASE}media/sample-${kind}.${ext}`
 }
 
 function handleVideo(id, kind) {
@@ -1489,6 +1509,7 @@ async function handle(req) {
 
 export function installDemo() {
   BASE = resolveBase()
+  detectMp4Support()
   const nativeFetch = window.fetch.bind(window)
 
   window.fetch = function demoFetch(input, init) {
