@@ -1104,6 +1104,17 @@ const POST_ROUTES = {
     state.scanRunning = false
     return { cancelled: true }
   },
+  // 打开扫码浏览器窗口：演示环境没有浏览器，提示即可
+  '/api/accounts/scan-login/reveal': () => ({
+    ok: true,
+    message: '演示环境不打开浏览器窗口，扫码状态请看账号页',
+  }),
+  // 经营主体重新扫码登录：演示环境直接进入「已启动」状态
+  '/api/accounts/merchant/scan-login': () => {
+    state.scanRunning = true
+    setTimeout(() => { state.scanRunning = false }, 4000)
+    return { started: true, session_id: 1, mode: 'merchant' }
+  },
   '/api/notes/batch-reprocess': () => ({
     ok: true,
     enqueued: { download: 0, heal: 0, erchuang: 1, subtitle: 0 },
@@ -1212,6 +1223,18 @@ function handleDynamic(method, path, qs) {
     const rest = msMatch[2] || ''
     if (method === 'GET') return json(clone(DEMO_MERCHANT_TREE.sessions[0].session))
     if (method === 'POST') return json({ ok: true, message: '演示：操作已模拟完成' })
+    // 启用/停用主体
+    if (method === 'PATCH') return json({ ok: true, message: '演示：主体状态已更新' })
+  }
+
+  // 删除账号 / 删除采集主页：演示里只回一个成功，界面上不真删数据
+  const acctDel = path.match(/^\/api\/accounts\/(\d+)$/)
+  if (acctDel && method === 'DELETE') {
+    return json({ ok: true, deleted: Number(acctDel[1]), message: '演示：账号已移除' })
+  }
+  const targetDel = path.match(/^\/api\/crawl-targets\/(\d+)$/)
+  if (targetDel && method === 'DELETE') {
+    return json({ ok: true, deleted: Number(targetDel[1]), message: '演示：主页已移除' })
   }
 
   const erchMask = path.match(/^\/api\/erchuang\/image-mask-icon(\/reset)?$/)
@@ -1414,6 +1437,23 @@ async function handle(req) {
 
   /* 读接口：先匹配静态路由，再匹配带路径参数的动态路由 */
   if (method === 'GET') {
+    /* 导出类接口：产品那边是原生下载，走不到 fetch；
+       这里仍给一份内容，让脚本能直接取到文本 */
+    if (path === '/api/publish/runs/export') {
+      const header = '笔记标题,平台,账号,状态,时间\n'
+      const body = state.publishRuns
+        .map((r) => `${r.note_title},${r.platform_name},${r.account_name},${r.status},${r.created_at}`)
+        .join('\n')
+      return text(header + body + '\n', 200, 'text/csv; charset=utf-8')
+    }
+    if (path === '/api/crawl-targets/export') {
+      const body = state.targets.map((t) => `${t.url},${t.label}`).join('\n') + '\n'
+      return text('主页地址,名称\n' + body, 200, 'text/csv; charset=utf-8')
+    }
+    if (path === '/api/notes/exports/download') {
+      return text('演示环境不提供真实导出文件。\n', 200)
+    }
+
     const hit = matchRoute(method, path)
     if (hit) return json(hit.fn(hit.params, url.searchParams))
     const dyn = handleDynamic(method, path, url.searchParams)

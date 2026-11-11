@@ -6,7 +6,8 @@
     "dev": "node scripts/build_demo.mjs && vitepress dev",
     "predemo": "node scripts/build_demo.mjs",
     "demo": "node scripts/build_demo.mjs",
-    "prebuild": "node scripts/build_demo.mjs && node scripts/build_seo.mjs --stage src",
+    "check:demo": "node scripts/check_demo_coverage.mjs",
+    "prebuild": "node scripts/build_demo.mjs && node scripts/check_demo_coverage.mjs && node scripts/build_seo.mjs --stage src",
     "build": "vitepress build",
     "postbuild": "node scripts/build_seo.mjs --stage dist",
     "preview": "vitepress preview"
