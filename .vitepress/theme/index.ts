@@ -10,6 +10,7 @@ import DeviceFrame from './components/DeviceFrame.vue'
 import DownloadGate from './components/DownloadGate.vue'
 import CompareTable from './components/CompareTable.vue'
 import StatRow from './components/StatRow.vue'
+import ContactWechat from './components/ContactWechat.vue'
 
 const theme: Theme = {
   extends: DefaultTheme,
@@ -23,6 +24,7 @@ const theme: Theme = {
     app.component('DownloadGate', DownloadGate)
     app.component('CompareTable', CompareTable)
     app.component('StatRow', StatRow)
+    app.component('ContactWechat', ContactWechat)
   },
 }
 

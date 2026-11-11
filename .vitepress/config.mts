@@ -150,6 +150,7 @@ export default defineConfig({
       { text: '界面一览', link: '/screenshots' },
       { text: '在线体验', link: '/online-demo' },
       { text: '价格', link: '/pricing' },
+      { text: '联系我们', link: '/contact' },
       { text: '帮助中心', link: '/guides/getting-started' },
       { text: '常见问题', link: '/faq' },
     ],
@@ -179,7 +180,7 @@ export default defineConfig({
         ],
       },
     ],
-    socialLinks: [{ icon: 'wechat', link: '/get-started#contact' }],
+    socialLinks: [{ icon: 'wechat', link: '/contact' }],
     footer: {
       message: 'Windows 桌面软件 · 笔记池与发布状态全部保存在本机',
       copyright: `© ${new Date().getFullYear()} 点评<span class="zp-divider" aria-hidden="true"></span>笔记助手`,
@@ -189,6 +190,9 @@ export default defineConfig({
     // 自定义字段（主题组件读取）
     contactLabel: '联系销售开通',
     contactHref: '/get-started#contact',
+    // 微信联系入口（ContactWechat 组件读取）
+    wechatId: 'ren_mo_mo',
+    wechatQr: 'wechat-qr-code.png',
     downloadUrl: '',
     imgCdn: '',
   } as any,

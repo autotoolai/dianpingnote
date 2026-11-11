@@ -47,3 +47,8 @@ description: 关于点评笔记助手：我们是谁，产品定位，数据与�
 更完整的说明见 [数据与隐私](/guides/data-and-privacy)。
 
 <CtaBand title="想聊聊？" desc="把你现在的做法和卡点说清楚，我们判断软件能不能帮上忙。" />
+
+<ContactWechat
+  title="联系我们"
+  desc="产品问题、开通问题、还是想先看看效果，都可以直接找我们聊。"
+/>

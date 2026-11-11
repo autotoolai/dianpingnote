@@ -22,7 +22,7 @@ const SITE = {
     '点评笔记助手是一款 Windows 桌面应用：从小红书、抖音、快手、B站采集笔记，本机改写文案、把标题叠到视频顶部或遮盖图文水印，再按每日定时发布到大众点评经营宝下的多个蓝 V。数据全部保存在本机。',
   sections: [
     { title: '核心能力', prefix: ['index', 'collect', 'erchuang', 'publish', 'screenshots'] },
-    { title: '上手与购买', prefix: ['pricing', 'get-started', 'faq', 'online-demo'] },
+    { title: '上手与购买', prefix: ['pricing', 'get-started', 'faq', 'online-demo', 'contact'] },
     { title: '使用指南', prefix: ['guides/'] },
     { title: '关于', prefix: ['about'] },
   ],

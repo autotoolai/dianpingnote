@@ -1,6 +1,7 @@
 ---
 layout: page
 pageClass: zp-home
+sidebar: false
 title: 每天的点评笔记，让电脑按时替你发
 description: 点评笔记助手是给门店运营用的 Windows 软件：把同行主页设成每天自动采集，自动改写成你能发的样子，再定时分发到大众点评经营宝下的多个蓝 V。笔记和素材都存在你自己的电脑上。
 ---
@@ -168,4 +169,9 @@ description: 点评笔记助手是给门店运营用的 Windows 软件：把同�
 <CtaBand
   title="先免费跑一条看看"
   desc="新用户首次打开软件自动获得 7 天试用和 10 条额度，先把一条笔记完整发出去，再决定要不要继续。"
+/>
+
+<ContactWechat
+  title="联系我们"
+  desc="扫码加微信，把你的蓝 V 数量和每月大概的发布条数说一声，我们给你对应的套餐。"
 />
