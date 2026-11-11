@@ -60,6 +60,7 @@ GEO 产物分工：`vitepress-plugin-llms` 负责 `llms-full.txt` 与每个子�
 | `/screenshots` | 真实界面截图（10 张，来自 `docs/sales/screenshots/`） |
 | `/pricing` | 按条计价、月订阅、数量包、试用 |
 | `/get-started` | 开始使用与联系销售 |
+| `/contact` | 联系我们（微信二维码，`ContactWechat` 组件） |
 | `/faq` | 常见问题（由 `data/faq.json` 生成，同时输出 FAQPage JSON-LD） |
 | `/about` | 品牌、数据与隐私、技术说明 |
 | `/guides/*` | 帮助中心：安装、首次上手、采集、二创、发布、状态词典、故障排查、数据与隐私 |
@@ -76,6 +77,21 @@ GEO 产物分工：`vitepress-plugin-llms` 负责 `llms-full.txt` 与每个子�
 ```bash
 python scripts/website_r2_upload.py dir apps/website/public/images site/images
 ```
+
+### 微信二维码
+
+`public/images/wechat-qr-code.png` 是唯一的客服二维码，供 `ContactWechat` 组件使用。
+微信号写在 `.vitepress/config.mts` 的 `themeConfig.wechatId`，二维码文件名写在 `themeConfig.wechatQr`，
+组件默认读这两个值，页面上可以用 `qr` / `wechatId` 属性覆盖。
+
+换二维码时注意：**必须是正方形**（否则 `width`/`height` 固定会拉变形），
+且四周留足静默区，否则手机扫不出来。换完用这段校验：
+
+```bash
+python -c "import cv2; i=cv2.imread('apps/website/public/images/wechat-qr-code.png', cv2.IMREAD_GRAYSCALE); print(i.shape, cv2.QRCodeDetector().detect(i)[0])"
+```
+
+`detect` 返回 True 才算合格（微信个人码 OpenCV 解不出内容属正常，不用 decode）。
 
 ## 密钥
 
