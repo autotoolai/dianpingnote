@@ -10,6 +10,21 @@
 
 权威文档：[docs/website/](../../docs/website/)
 
+## 演示站（/demo/）
+
+演示站和产品界面是**同一套代码**：构建时把 `packages/admin/static/` 原样复制到
+`apps/website/public/demo/`，再叠一层假数据（`demo/src/api.js` 拦截 `fetch`）。
+所以改产品前端，演示站下次构建自动跟着变。
+
+但假数据层不会自动跟上接口变化，因此改完产品前端必须跑一次：
+
+```bash
+npm run check:demo    # 产品用的接口，演示站是不是都实现了
+```
+
+漏实现会在构建阶段报错（`prebuild` 里已接上）。详细约定见
+[docs/website/demo_site_iteration.md](../../docs/website/demo_site_iteration.md)。
+
 ## 本地开发
 
 ```bash
