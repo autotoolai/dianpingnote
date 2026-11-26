@@ -75,6 +75,13 @@ const attrRe = /(?:href|src)="([^"]+)"/g
 let broken = 0
 let checked = 0
 
+/**
+ * 演示站产物在公开仓构建里不存在（产品前端是私有源码）。
+ * 页面里指向 /demo/ 的链接在公开仓 CI 里必然「死链」，那是环境差异不是缺陷。
+ * 完整仓库构建时产物存在，这些链接照常校验。
+ */
+const HAS_DEMO = existsSync(join(DIST, 'demo', 'index.html'))
+
 for (const file of files) {
   const html = readFileSync(file, 'utf8')
   const relFile = relative(DIST, file)
@@ -93,6 +100,7 @@ for (const file of files) {
     const targets = resolveTarget(href, relFile)
     if (!targets) continue
     if (!targets.some(existsSync)) {
+      if (!HAS_DEMO && href.startsWith('/demo')) continue
       console.error(`[links] 死链: ${from} -> ${href}`)
       broken++
     }
