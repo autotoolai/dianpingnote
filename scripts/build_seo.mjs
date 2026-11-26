@@ -31,7 +31,7 @@ const SITE = {
   description:
     '点评笔记助手是一款 Windows 桌面应用：从小红书、抖音、快手、B站采集笔记，本机改写文案、把标题叠到视频顶部或遮盖图文水印，再按每日定时发布到大众点评经营宝下的多个蓝 V。数据全部保存在本机。',
   sections: [
-    { title: '核心能力', prefix: ['index', 'collect', 'erchuang', 'publish', 'screenshots'] },
+    { title: '核心能力', prefix: ['index', 'collect', 'erchuang', 'publish', 'feature', 'screenshots'] },
     { title: '上手与购买', prefix: ['pricing', 'get-started', 'faq', 'online-demo', 'contact'] },
     { title: '使用指南', prefix: ['guides/'] },
     { title: '点评知识库', prefix: ['knowledge/'] },
@@ -486,7 +486,7 @@ function verifyAnswerConsistency() {
   }
   // 反向：源文件有胶囊但真源里没有
   for (const rel of ['index.md', 'pricing.md', 'collect.md', 'erchuang.md', 'publish.md',
-    'screenshots.md', 'get-started.md', 'online-demo.md', 'contact.md', 'about.md']) {
+    'screenshots.md', 'feature.md', 'get-started.md', 'online-demo.md', 'contact.md', 'about.md']) {
     const route = rel === 'index.md' ? '' : rel.replace(/\.md$/, '')
     if (pageAnswers[route] === undefined) {
       const raw = readFileSync(join(SRC, rel), 'utf8')

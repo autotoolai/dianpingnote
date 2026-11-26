@@ -129,7 +129,7 @@ if (mdBad === 0) {
  * 插件生成 Markdown 时会把 HTML 整段剥掉，答案就没了。
  * 页面看着没问题、AI 却读不到结论 —— 这类损失只有从产物层查才看得见。
  */
-const TOP_ROUTES = ['', 'pricing', 'collect', 'erchuang', 'publish', 'screenshots',
+const TOP_ROUTES = ['', 'pricing', 'collect', 'erchuang', 'publish', 'feature', 'screenshots',
   'get-started', 'online-demo', 'contact', 'about']
 
 const llmsFullPathForTop = join(DIST, 'llms-full.txt')

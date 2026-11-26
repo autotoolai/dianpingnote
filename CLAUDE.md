@@ -68,7 +68,7 @@ npm run verify       # 四道门禁：GEO 写法 / 死链 / llms.txt 格式 / GE
 4. 改产品前端（`packages/admin/static/js/app.js`）后要跑 `npm run check:demo`，确认假数据层跟上了接口变化。
 5. 域名出现在 `config.mts` 的 `SITE.origin` 和 `scripts/seo_config.mjs` 里，换域名要一起改。
 6. 关键词、答案胶囊、事实要点、引用场景只在 `scripts/seo_config.mjs` 里维护一份，改别处会被审计拦下。
-7. 顶层落地页（`index` / `pricing` / `collect` / `erchuang` / `publish` / `screenshots` /
+7. 顶层落地页（`index` / `pricing` / `collect` / `erchuang` / `publish` / `feature` / `screenshots` /
    `get-started` / `online-demo` / `contact` / `about`）的答案胶囊要同时写两处：
    页面里的 `<div class="zp-answer">` 与 `seo_config.mjs` 的 `pageAnswers`。
    两处必须逐字一致，`npm run check:geo` 会比对。

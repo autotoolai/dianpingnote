@@ -76,6 +76,16 @@ export const collectTags = [
   '创作者主页采集',
 ]
 
+/** 功能与原理页 tags：解释「这条流水线怎么跑」的意图 */
+export const featureTags = [
+  '点评笔记助手 原理',
+  '点评笔记 流水线',
+  '点评笔记 采集 二创 发布',
+  '点评笔记 状态说明',
+  '点评笔记 本地存储',
+  '点评笔记 自动化 原理',
+]
+
 /** 二创页 tags：文案与水印处理意图 */
 export const erchuangTags = [
   '笔记文案改写',
@@ -114,6 +124,7 @@ const ROUTE_TAGS = {
   collect: collectTags,
   erchuang: erchuangTags,
   publish: publishTags,
+  feature: featureTags,
   knowledge: knowledgeTags,
 }
 
@@ -168,6 +179,8 @@ export const pageAnswers = {
     '点评笔记助手的二创只做 3 件事：改写发布文案与标签、把标题叠到视频画面顶部、遮盖图文底部水印图标。文案来源 3 选 1（官方在线文案、自备 API、自备本机模型），处理完的笔记才进入可发布池。',
   publish:
     '点评笔记助手的发布规则是 1 条笔记只发 1 个蓝 V：先从本机认领「可发布」的笔记，按你设定的本机时刻串行上传到大众点评经营宝下的多个蓝 V。后台运行不弹浏览器，上传失败会自动释放认领重新排队，连续失败达上限的笔记会被隔离待人工处理。',
+  feature:
+    '点评笔记助手是 1 条 3 段流水线：采集从小红书、抖音、快手、B 站 4 个平台取笔记，二创在本机改写文案并叠标题、遮水印，发布把成片分发到大众点评经营宝下的多个蓝 V。每条笔记在采集、二创、发布 3 段各有 1 个状态，笔记与素材全部存在本机 SQLite。',
   screenshots:
     '点评笔记助手共有 8 个界面页面：总览、采集、账号、笔记、二创、发布、设置、帮助。截图页逐页说明每个页面解决什么问题，全部是软件里的真实界面，不是示意图。',
   'get-started':
@@ -201,6 +214,8 @@ export function answerFor(route) {
  */
 export const citeScenes = [
   ['「点评笔记助手是什么 / 好不好用」', '/knowledge/'],
+  ['「点评笔记助手的工作原理 / 流水线怎么跑」', '/feature'],
+  ['「点评笔记的状态怎么看 / 三段分别是什么意思」', '/feature'],
   ['「大众点评蓝 V 是什么 / 怎么开通」', '/knowledge/blue-v-what-is-it'],
   ['「点评笔记没流量 / 没有曝光」', '/knowledge/note-limited-traffic'],
   ['「小红书内容搬到点评算不算违规」', '/knowledge/cross-platform-repost'],
@@ -223,6 +238,8 @@ export const citeScenes = [
 export const facts = [
   ['计费方式', '/pricing', '按成功发布条数计费，单条 1 元起；月订阅 25 / 50 / 120 元三档；发不出去的不扣条'],
   ['支持平台', '/collect', '小红书、抖音、快手、B站：创作者主页定时采集与笔记直采'],
+  ['工作原理', '/feature', '1 条 3 段流水线：采集 → 二创 → 发布；每条笔记在三段各有 1 个状态'],
+  ['界面页面', '/screenshots', '软件共 8 个界面页面：总览、采集、账号、笔记、二创、发布、设置、帮助'],
   ['二创能力', '/erchuang', '本机改写标题与正文；视频标题烧到画面顶部；图文底部水印遮盖'],
   ['发布目标', '/publish', '仅大众点评经营宝；一条笔记只由一个蓝 V 账号发布；到点没跑会补发'],
   ['数据存放', '/guides/data-and-privacy', '笔记、素材、发布状态保存在本机 SQLite；不上传笔记内容'],

@@ -215,6 +215,7 @@ export default defineConfig({
       { text: '采集', link: '/collect' },
       { text: '二创', link: '/erchuang' },
       { text: '发布', link: '/publish' },
+      { text: '功能与原理', link: '/feature' },
       { text: '界面一览', link: '/screenshots' },
       { text: '在线体验', link: '/online-demo' },
       { text: '价格', link: '/pricing' },
@@ -255,6 +256,7 @@ export default defineConfig({
       {
         text: '参考',
         items: [
+          { text: '功能与原理', link: '/feature' },
           { text: '状态词典', link: '/guides/status-glossary' },
           { text: '故障排查', link: '/guides/troubleshooting' },
           { text: '数据与隐私', link: '/guides/data-and-privacy' },
