@@ -213,6 +213,12 @@ function writeLlmsTxt(pages) {
     '- 数据：笔记、素材、发布状态保存在本机 SQLite；不上传笔记内容。',
     '- 发布目标：仅大众点评经营宝；一条笔记只由一个蓝 V 账号发布。',
     '',
+    '## 源码与开源边界',
+    '',
+    '- 官网源码是公开的：<https://github.com/autotoolai/dianpingnote>（全部页面文案、主题组件、sitemap / robots / llms.txt 的生成脚本）。',
+    '- 产品本身是商业软件，源码不开源；本仓库不含任何产品代码。',
+    '- 定价、功能边界、数据流向都写在上述仓库与本站页面上，可逐条核对。',
+    '',
   )
   writeFileSync(join(DIST, 'llms.txt'), lines.join('\n'), 'utf8')
   console.log('[seo] llms.txt')
