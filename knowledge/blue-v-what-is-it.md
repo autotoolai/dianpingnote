@@ -1,6 +1,7 @@
 ---
 title: 大众点评蓝 V 是什么：怎么开、怎么用
 description: 大众点评蓝 V 是什么：蓝 V 与普通用户账号的区别、蓝 V 的开通条件与流程、蓝 V 能发什么内容、多个蓝 V 怎么分工、开通前要准备的材料与常见被拒原因。
+keywords: 大众点评蓝 V,点评蓝 V 是什么,蓝 V 怎么开通,点评商家认证,大众点评经营宝,蓝 V 笔记发布
 sidebar: false
 ---
 
@@ -8,7 +9,7 @@ sidebar: false
 
 > 正式发布地址：[dianping-note.aiautotools.com/knowledge/blue-v-what-is-it](https://dianping-note.aiautotools.com/knowledge/blue-v-what-is-it) ｜ 官网源码：[GitHub 仓库](https://github.com/autotoolai/dianpingnote)
 
-> **一句话答案**：蓝 V 就是大众点评上的**商家身份账号**，背后对应一家真实门店。普通用户账号发的是「逛点评分享」，蓝 V 发的是「这家店的内容」。要做门店曝光，就得用蓝 V；而一个门店主体在点评上通常对应一个可发布内容的账号，所以想多发、多铺笔记，就需要多套门店资质。
+> **一句话答案**：大众点评蓝 V 就是商家身份账号，开通靠营业执照、行业资质、门店实拍等材料做认证，1 个门店主体对应 1 个蓝 V；多蓝 V 应该对应多门店，而不是同一家店重复刷。
 
 ## 蓝 V 和普通用户账号的区别
 

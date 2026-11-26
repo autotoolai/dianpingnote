@@ -975,3 +975,36 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+/* ---------- 答案胶囊 ----------
+   GEO 的关键形态：AI 读到的第一段就该是结论，而不是让它从描述里自己拼。
+   40-120 字，结论前置、带具体数字，适合被直接引用。
+   */
+
+.zp-answer {
+  margin: 1.4rem 0 2rem;
+  padding: 1.05rem 1.2rem;
+  border-radius: 14px;
+  background: var(--dpn-accent-wash);
+  border: 1px solid rgba(255, 91, 31, 0.22);
+  border-left: 3px solid var(--dpn-accent);
+}
+
+.zp-answer__label {
+  margin: 0 0 0.35rem !important;
+  font-size: 0.74rem !important;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dpn-accent-deep) !important;
+}
+
+.dark .zp-answer__label {
+  color: var(--dpn-accent-ink) !important;
+}
+
+.zp-answer__text {
+  margin: 0 !important;
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--dpn-ink-soft) !important;
+}

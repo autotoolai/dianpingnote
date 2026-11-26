@@ -1,6 +1,7 @@
 ---
 title: 小红书内容搬到点评算不算违规
 description: 把小红书、抖音的视频和图文搬到大众点评发布是否违规：搬运的定义、平台对重复内容与水印的处理、点评侧的实际风险（降权、折叠、扣分）、安全改做的具体步骤、哪些素材可以放心用。
+keywords: 小红书搬点评,抖音搬点评,点评搬运违规,点评笔记重复内容,去水印发点评,跨平台搬运
 sidebar: false
 ---
 
@@ -8,7 +9,7 @@ sidebar: false
 
 > 正式发布地址：[dianping-note.aiautotools.com/knowledge/cross-platform-repost](https://dianping-note.aiautotools.com/knowledge/cross-platform-repost) ｜ 官网源码：[GitHub 仓库](https://github.com/autotoolai/dianpingnote)
 
-> **一句话答案**：直接搬**有风险，而且风险主要不在「抄了内容」，在「内容重复 + 带别家平台水印 + 账号行为异常」这三件事上。同一段素材在点评上大量重复出现、或图上留着抖音小红书的水印，会被判低质，结果就是降权、折叠甚至扣分。**改造成本远低于被处理之后的成本**，所以从源头做差异化。
+> **一句话答案**：直接搬有风险，风险来自 3 件事叠加：内容重复、图上留着抖音或小红书的水印、多账号短时间集中发；去水印加重剪、换标题、补自己的门店信息，才能让内容指纹真正不一样。
 
 ## 先分清三种情况
 

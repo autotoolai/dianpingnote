@@ -1,6 +1,7 @@
 ---
 title: 点评笔记被折叠或搜不到怎么办
 description: 大众点评笔记被折叠、搜不到、看不到的排查与处理：折叠和违规的区别、怎么确认自己这条是不是被处理了、几种常见成因（重复内容、带水印、敏感词、外链、批量行为）、逐项自查清单、处理顺序与多久能恢复。
+keywords: 点评笔记被折叠,点评笔记搜不到,点评内容不通过,点评笔记违规,点评折叠怎么恢复,点评笔记隐藏
 sidebar: false
 ---
 
@@ -8,7 +9,7 @@ sidebar: false
 
 > 正式发布地址：[dianping-note.aiautotools.com/knowledge/note-folded-hidden](https://dianping-note.aiautotools.com/knowledge/note-folded-hidden) ｜ 官网源码：[GitHub 仓库](https://github.com/autotoolai/dianpingnote)
 
-> **一句话答案**：先分清是**折叠**（降权，搜不到但后台有记录）还是**违规**（有明确违规记录和扣分）。折叠自己处理：查重复、查水印、查敏感词、查外链，逐项改掉重做；违规先申诉别乱发。**折叠期间越急着多发，越难恢复。**
+> **一句话答案**：先分清是折叠还是违规：折叠查 5 项（重复内容、别家水印、敏感词、外链、批量发布），违规查后台违规记录并申诉；折叠期间越急着多发越难恢复，别删了重发同一条。
 
 ## 折叠和违规的区别
 

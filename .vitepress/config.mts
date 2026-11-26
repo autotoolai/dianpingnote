@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url'
 import { dirname, resolve } from 'node:path'
 import { defineConfig, type HeadConfig } from 'vitepress'
 import llmstxt from 'vitepress-plugin-llms'
+import { globalTags, tagsFor, SITE as SEO_SITE } from '../scripts/seo_config.mjs'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const siteRoot = resolve(here, '..')
@@ -32,6 +33,9 @@ const organization = {
   alternateName: SITE.latin,
   url: `${SITE.origin}/`,
   logo: `${SITE.origin}/brand-logo.svg`,
+  // sameAs 指向官网源码仓库：让搜索引擎把「官网」与「GitHub 仓库」认成同一实体，
+  // 两个方向的证据互相加强（仓库 README 也指回官网）
+  sameAs: [SEO_SITE.repo],
 }
 
 const software = {
@@ -87,6 +91,8 @@ export default defineConfig({
     ['link', { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' }],
     ['meta', { name: 'theme-color', content: '#fbf6ee' }],
     ['meta', { name: 'author', content: SITE.name }],
+    // 全局 keywords：per-page 的页面会在 transformHead 里覆盖这一条
+    ['meta', { name: 'keywords', content: globalTags.join(',') }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:site_name', content: SITE.name }],
     ['meta', { property: 'og:locale', content: 'zh_CN' }],
@@ -112,8 +118,17 @@ export default defineConfig({
         : `${pageData.title} · ${SITE.name}`
       : `${SITE.name} · ${SITE.tagline}`
     const desc = (pageData.description as string) || SITE.description
+    const route = path === 'index' ? '' : path.replace(/\/index$/, '')
+    // per-page keywords：文章页用 frontmatter 的 keywords 字段，静态页用词表
+    const fmKeywords = (pageData.frontmatter as any)?.keywords
+    const keywords: string[] = Array.isArray(fmKeywords) && fmKeywords.length
+      ? fmKeywords
+      : typeof fmKeywords === 'string' && fmKeywords.trim()
+        ? fmKeywords.split(/[,，]/).map((s) => s.trim()).filter(Boolean)
+        : tagsFor(route)
     const out: HeadConfig[] = [
       ['link', { rel: 'canonical', href: url }],
+      ['meta', { name: 'keywords', content: keywords.join(',') }],
       ['meta', { property: 'og:url', content: url }],
       ['meta', { property: 'og:title', content: title }],
       ['meta', { property: 'og:description', content: desc }],
@@ -132,6 +147,57 @@ export default defineConfig({
             name: it.q,
             acceptedAnswer: { '@type': 'Answer', text: it.a },
           })),
+        }),
+      ])
+    }
+    // 文章页补 Article + WebPage：知识库是长文主力，Article 声明能让搜索引擎
+    // 认出「这是一篇有正文、有日期的文章」，而不是当成普通落地页。
+    if (route.startsWith('knowledge/') || route.startsWith('guides/')) {
+      const articleBody = (pageData.content as string) || ''
+      out.push([
+        'script',
+        { type: 'application/ld+json' },
+        j({
+          '@context': 'https://schema.org',
+          '@graph': [
+            {
+              '@type': 'Article',
+              '@id': `${url}#article`,
+              headline: title,
+              description: desc,
+              inLanguage: 'zh-CN',
+              datePublished: (pageData.frontmatter as any)?.date || SITE.updated,
+              dateModified: (pageData.frontmatter as any)?.updated || (pageData.frontmatter as any)?.date || SITE.updated,
+              author: { '@type': 'Organization', name: SITE.name },
+              publisher: { '@id': `${SITE.origin}/#organization` },
+              isPartOf: { '@id': `${SITE.origin}/#website` },
+              mainEntityOfPage: { '@id': `${url}#webpage` },
+              wordCount: articleBody.length,
+              keywords: keywords.join(','),
+            },
+            {
+              '@type': 'WebPage',
+              '@id': `${url}#webpage`,
+              url,
+              name: title,
+              description: desc,
+              inLanguage: 'zh-CN',
+              isPartOf: { '@id': `${SITE.origin}/#website` },
+              breadcrumb: { '@id': `${url}#breadcrumb` },
+              about: { '@id': `${SITE.origin}/#software` },
+            },
+            {
+              '@type': 'BreadcrumbList',
+              '@id': `${url}#breadcrumb`,
+              itemListElement: [
+                { '@type': 'ListItem', position: 1, name: '首页', item: `${SITE.origin}/` },
+                ...(route.startsWith('knowledge/')
+                  ? [{ '@type': 'ListItem', position: 2, name: '知识库', item: `${SITE.origin}/knowledge/` }]
+                  : [{ '@type': 'ListItem', position: 2, name: '帮助中心', item: `${SITE.origin}/guides/getting-started` }]),
+                { '@type': 'ListItem', position: 3, name: title.replace(` · ${SITE.name}`, ''), item: url },
+              ],
+            },
+          ],
         }),
       ])
     }

@@ -1,6 +1,7 @@
 ---
 title: 点评笔记发布时间怎么选
 description: 大众点评笔记什么时候发效果最好：工作日与周末的差别、午餐晚餐前的浏览高峰、几点到几点、一次发几条、错峰与多账号排期、时区与本地作息的影响，以及如何用自己账号的数据验证而不是照抄通用结论。
+keywords: 点评笔记发布时间,点评几点发笔记,点评发布最佳时间,点评笔记推广时间,点评发布时间表
 sidebar: false
 ---
 
@@ -8,7 +9,7 @@ sidebar: false
 
 > 正式发布地址：[dianping-note.aiautotools.com/knowledge/best-publish-time](https://dianping-note.aiautotools.com/knowledge/best-publish-time) ｜ 官网源码：[GitHub 仓库](https://github.com/autotoolai/dianpingnote)
 
-> **一句话答案**：没有「最佳时间」，但有**大概率更好的时段**：本地时间段的**午休前一小时和下班前一小时**，以及**周末上午**。真正的原则是：**在你客户会刷点评的那个窗口发布**，并且**多个账号错开时间**，不要在同一分钟集中发。
+> **一句话答案**：点评笔记发布时间没有通用答案，但概率上更好的窗口是本地时间的午休前一小时和下班前一小时，周末上午也适合；一次发一条，多账号之间至少错开 30 分钟。
 
 ## 为什么时间有影响
 

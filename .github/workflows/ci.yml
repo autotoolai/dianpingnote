@@ -39,6 +39,20 @@ jobs:
             echo "ok: $f"
           done
 
+      - name: 校验 GEO 写法门禁
+        # 审的是源 Markdown：H1 后必须有自包含的一句话答案、有 H2 分层、keywords 齐全。
+        run: python3 scripts/check_geo_lint.py
+
+      - name: 校验站内死链
+        run: node scripts/check_links.mjs
+
+      - name: 校验 llms.txt 格式（llmstxt.org）
+        # 校验器走 npx 临时拉取；拉不动时脚本自己跳过，不拦构建。
+        run: node scripts/check_llms_txt.mjs
+
+      - name: GEO 审计（存在性 + 内容质量层）
+        run: node scripts/audit_geo.mjs
+
       - name: 校验产品源码没有混入公开仓
         # 公开仓只放官网内容。万一有人把 packages/ 复制进来，门禁在这里挡住。
         run: |

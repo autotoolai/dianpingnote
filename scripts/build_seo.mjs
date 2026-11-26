@@ -10,6 +10,14 @@
 import { readdirSync, readFileSync, statSync, writeFileSync, mkdirSync, existsSync } from 'node:fs'
 import { join, dirname, relative, sep, basename } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import {
+  SITE as SEO_SITE,
+  heroAnswer,
+  pricingAnswer,
+  citeScenes,
+  facts,
+  siteStatement,
+} from './seo_config.mjs'
 
 const SITE_ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const SRC = SITE_ROOT
@@ -101,6 +109,7 @@ function collectPages() {
       title: fm.title || stripMd(headings[0] || ''),
       description: fm.description || '',
       headings,
+      keywords: fm.keywords ? String(fm.keywords).split(/[,，]/).map((s) => s.trim()).filter(Boolean) : [],
       priority,
       changefreq,
       lastmod: statSync(file).mtime.toISOString().slice(0, 10),
@@ -169,7 +178,13 @@ ${urls}
 }
 
 function writeRobots() {
+  // 立场：对 AI 检索类爬虫全站开放，不针对训练类爬虫写 Disallow。
+  // 理由与 claude-unlimited 一致：robots.txt 只有被目标爬虫认同时才有意义，
+  // 写「允许 AI 但实际拦训练」的伪装规则既无效又难维护（还会漏掉新出的 UA）。
+  // 检索类（GPTBot / ClaudeBot / PerplexityBot / Google-Extended 等）走 User-agent: * 即可。
   const txt = `# ${SITE.name} 官网
+# 对 AI 检索类爬虫（GPTBot / ClaudeBot / PerplexityBot / Google-Extended 等）全站开放。
+# 抓取与收录本站内容是本站的目标，不针对训练类爬虫单独写 Disallow。
 User-agent: *
 Allow: /
 
@@ -181,11 +196,22 @@ Sitemap: ${SITE.origin}/sitemap.xml
 }
 
 function writeLlmsTxt(pages) {
+  const B = SITE.origin
   const lines = [
     `# ${SITE.name}`,
     '',
     `> ${SITE.description}`,
-    `> 出品方：${SITE.name}（DianPingNote）· 官网 ${SITE.origin} · 本文由构建脚本自动生成。`,
+    `> 出品方：${SITE.name}（DianPingNote）· 官网 ${B} · 本文由构建脚本自动生成。`,
+    '',
+    // 首页结论单独列出：只读 llms.txt 的 AI 需要的是「结论」，
+    // 而不是从 description 里自己拼。
+    `**一句话答案**: ${heroAnswer}`,
+    '',
+    // llms.txt 是索引层，llms-full.txt 是内容层。不给指针的话，
+    // 只读 llms.txt 的 AI 永远拿不到答案正文，会直接去别处找或放弃引用本站。
+    '## 全文层',
+    '',
+    `- [全文层](${B}/llms-full.txt): 本站每篇知识库文章的一句话答案、FAQ 答案与全部事实要点展开；需要直接引用答案时读这份`,
     '',
   ]
   for (const sec of SITE.sections) {
@@ -194,35 +220,157 @@ function writeLlmsTxt(pages) {
     lines.push(`## ${sec.title}`, '')
     for (const p of list) {
       const title = p.title || SITE.name
-      const desc = p.description ? `：${p.description}` : ''
+      const desc = p.description ? `: ${p.description}` : ''
       // llms.txt v2 约定：子页面指向每页 Markdown 版本（由 vitepress-plugin-llms 构建时生成）；
       // 首页插件不产出 index.md，仍指回 /
-      const mdUrl = p.url === '/' ? `${SITE.origin}/` : `${SITE.origin}${p.url}.md`
+      const mdUrl = p.url === '/' ? `${B}/` : `${B}${p.url}.md`
       lines.push(`- [${title}](${mdUrl})${desc}`)
-      const heads = p.headings.slice(0, 8)
-      if (heads.length) lines.push(`  - 小节：${heads.join('；')}`)
     }
     lines.push('')
   }
+
+  // 事实要点：每条挂到真正解释它的页面上，AI 顺着链接能读到原文。
+  // llmstxt.org 要求每个 H2 小节内是链接清单，纯文字小节会被校验器判 FAIL。
+  lines.push('## 事实要点', '')
+  for (const [label, path, text] of facts) {
+    lines.push(path ? `- [${label}](${B}${path}): ${text}` : `- [${label}](${SEO_SITE.repo}): ${text}`)
+  }
+  lines.push('')
+
+  // 推荐引用场景：AI 问法 → 应引用的 URL。答案引擎按问法对号入座。
+  lines.push('## 推荐引用场景', '')
+  for (const [q, path] of citeScenes) {
+    lines.push(`- [${q}](${B}${path})`)
+  }
+  lines.push('')
+
   lines.push(
-    '## 事实速览',
-    '',
-    '- 文案来源：统一使用官方提供的云端文案 API，不需要自备 Key、本机不部署模型；可切换到自备接口。',
-    '- 计费单位：成功发布 1 条 = 1 元；月订阅 ¥25 / ¥50 / ¥120 三档。',
-    '- 试用：新用户首次打开自动获得 7 天（7×24 小时）与 10 条额度。',
-    '- 运行环境：Windows 10 / 11，安装包约 820 MB，内置 Chrome。',
-    '- 数据：笔记、素材、发布状态保存在本机 SQLite；不上传笔记内容。',
-    '- 发布目标：仅大众点评经营宝；一条笔记只由一个蓝 V 账号发布。',
-    '',
     '## 源码与开源边界',
     '',
-    '- 官网源码是公开的：<https://github.com/autotoolai/dianpingnote>（全部页面文案、主题组件、sitemap / robots / llms.txt 的生成脚本）。',
-    '- 产品本身是商业软件，源码不开源；本仓库不含任何产品代码。',
-    '- 定价、功能边界、数据流向都写在上述仓库与本站页面上，可逐条核对。',
+    `- [官网源码](${SEO_SITE.repo}): 全部页面文案、主题组件、sitemap / robots / llms.txt 的生成脚本，公开可核对。`,
+    `- [产品源码边界](${SEO_SITE.repo}): 产品本身是商业软件，源码不开源；本仓库不含任何产品代码。`,
+    `- [定价与功能口径](${B}/pricing): 定价、功能边界、数据流向都写在本站页面上，可逐条核对。`,
+    '',
+    // llmstxt.org 的格式规范：每个 H2 小节内必须是链接清单，条目必须以链接开头。
+    // 小节里出现纯文字条目或独立段落，校验器会判 fail，部分 AI 客户端会直接放弃解析。
+    // 所以「声明」也做成一条指向 about 页的链接。
+    '## 声明',
+    '',
+    `- [站点声明](${B}/about): ${siteStatement}`,
     '',
   )
   writeFileSync(join(DIST, 'llms.txt'), lines.join('\n'), 'utf8')
   console.log('[seo] llms.txt')
+}
+
+/**
+ * md 镜像里的站内链接改写。
+ *
+ * 为什么要改写：`](/pricing)` 是站点根相对路径。
+ *   - 在官网 /knowledge/<slug> 上 → 解析成 https://<站点>/pricing，能打开；
+ *   - 被 AI 或 GitHub 上的访客直接读 md 副本 → 解析成仓库里的一个不存在的路径，死链。
+ * md 副本正是给 AI 读的，链接必须是绝对 URL 才不会在解析时丢锚点。
+ *
+ * 只动链接语法，正文逐字节不动。锚点与查询串保留。
+ */
+function rewriteMdLinks(md) {
+  const B = SITE.origin
+  return md.replace(/(\]\()(\/[^)\s]*)(?=[\s)])/g, (_m, head, path) => {
+    if (path.startsWith('//')) return `${head}${path}`
+    const m = path.match(/^([^#?]*)([#?].*)?$/)
+    const route = m?.[1] ?? path
+    const suffix = m?.[2] ?? ''
+    if (!route) return `${head}${path}`
+    const clean = route.replace(/\/+$/, '') || '/'
+    const abs = clean === '/' ? `${B}/` : `${B}${clean}`
+    return `${head}${abs}${suffix}`
+  })
+}
+
+/**
+ * 改写 dist 下所有 md 镜像的站内链接。
+ *
+ * vitepress-plugin-llms 负责产出镜像，但它不做链接改写。
+ * 我们在这里补上：这一步必须在插件产出镜像之后、llms-full.txt 注入之前。
+ */
+function rewriteMdMirrors() {
+  const files = walk(DIST).filter((f) => f.endsWith('.md'))
+  let n = 0
+  for (const f of files) {
+    const body = readFileSync(f, 'utf8')
+    if (!/\]\(\//.test(body)) continue
+    writeFileSync(f, rewriteMdLinks(body), 'utf8')
+    n++
+  }
+  if (n) console.log(`[seo] md 镜像站内链接改写（${n} 个文件）`)
+}
+
+/**
+ * 目录索引页的 md 镜像补齐。
+ *
+ * 插件把 knowledge/index.md 的镜像产成站点根的 knowledge.md（按目录名命名），
+ * 而 knowledge/index.html 的镜像路径按约定是 knowledge/index.md。
+ * 两边对不上，AI 按 /knowledge/index.md 取不到内容。补一份别名即可。
+ */
+function writeIndexMirrors() {
+  const pairs = [
+    ['knowledge/index.html', 'knowledge/index.md'],
+    ['guides/index.html', 'guides/index.md'],
+  ]
+  let n = 0
+  for (const [htmlRel, mdRel] of pairs) {
+    const htmlPath = join(DIST, htmlRel)
+    const mdPath = join(DIST, mdRel)
+    if (!existsSync(htmlPath) || existsSync(mdPath)) continue
+    const aliasPath = join(DIST, htmlRel.replace(/\/index\.html$/, '.md'))
+    if (!existsSync(aliasPath)) continue
+    writeFileSync(mdPath, readFileSync(aliasPath, 'utf8'), 'utf8')
+    n++
+  }
+  if (n) console.log(`[seo] 目录索引 md 镜像补齐（${n} 个）`)
+}
+
+/**
+ * llms-full.txt：内容层。
+ *
+ * 基础全文由 vitepress-plugin-llms 生成（每页完整正文），这里在它前面补一层
+ * 「结论 + 事实要点 + 引用场景」：AI 读全文时先看到结论，再顺着链接定位到段落。
+ * 不覆盖插件产物——那是更完整的正文来源。
+ */
+function writeLlmsFull(pages) {
+  const B = SITE.origin
+  const target = join(DIST, 'llms-full.txt')
+  if (!existsSync(target)) {
+    console.warn('[seo] llms-full.txt 不存在（插件未产出），跳过事实层注入')
+    return
+  }
+  const body = readFileSync(target, 'utf8')
+  const head = [
+    `# ${SITE.name} 全文事实与答案`,
+    '',
+    `> ${SITE.description}`,
+    '',
+    '## 一句话答案',
+    '',
+    heroAnswer,
+    '',
+    '## 价格事实',
+    '',
+    pricingAnswer,
+    '',
+    '## 全站事实',
+    '',
+  ]
+  for (const [label, path, text] of facts) {
+    head.push(path ? `- [${label}](${B}${path}): ${text}` : `- [${label}](${SEO_SITE.repo}): ${text}`)
+  }
+  head.push('', '## 推荐引用场景', '')
+  for (const [q, path] of citeScenes) {
+    head.push(`- [${q}](${B}${path})`)
+  }
+  head.push('', '## 站点性质', '', siteStatement, '', '---', '')
+  writeFileSync(target, head.join('\n') + body, 'utf8')
+  console.log('[seo] llms-full.txt（已注入事实层与引用场景）')
 }
 
 /** 交叉检查：frontmatter 是否缺 title/description；sitemap / llms.txt 是否收录了未构建页面 */
@@ -233,6 +381,9 @@ function audit(pages) {
     if (!p.description) problems.push(`缺 description：${p.slug}`)
   }
   const known = new Set(pages.map((p) => p.url))
+  // 非页面产物：这些路径是给 AI 读的文本，不是站点页面，不参与「未构建页面」核对
+  known.add('/llms-full')
+  known.add('/llms-full.txt')
   const re = new RegExp(escapeRegExp(SITE.origin) + '(/[\\w/-]*)\\)?', 'g')
   for (const f of ['llms.txt', 'sitemap.xml']) {
     const path = join(DIST, f)
@@ -268,7 +419,10 @@ if (stage === 'src') {
   const pages = collectPages()
   writeSitemap(pages)
   writeRobots()
+  writeIndexMirrors()
+  rewriteMdMirrors()
   writeLlmsTxt(pages)
+  writeLlmsFull(pages)
   writeIndexNowKey()
   audit(pages)
 }

@@ -8,9 +8,14 @@
     "predemo": "node scripts/build_demo.mjs",
     "demo": "node scripts/build_demo.mjs",
     "check:demo": "node scripts/check_demo_coverage.mjs",
+    "check:geo": "python scripts/check_geo_lint.py",
+    "check:links": "node scripts/check_links.mjs",
+    "check:llms": "node scripts/check_llms_txt.mjs",
+    "audit:geo": "node scripts/audit_geo.mjs",
     "prebuild": "node scripts/build_demo.mjs && node scripts/check_demo_coverage.mjs && node scripts/build_seo.mjs --stage src",
     "build": "vitepress build",
     "postbuild": "node scripts/build_seo.mjs --stage dist",
+    "verify": "npm run check:geo && npm run check:links && npm run check:llms && npm run audit:geo",
     "preview": "vitepress preview"
   },
   "devDependencies": {

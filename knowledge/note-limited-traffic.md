@@ -1,6 +1,7 @@
 ---
 title: 点评笔记没流量的原因排查
 description: 点评笔记没有流量、发出去看不到、浏览量只有个位数的排查方法：内容重复、账号新号无权重、图片视频质量、标题写法、发布时间、违规限流状态、重新发还是改内容。
+keywords: 点评笔记没流量,点评笔记没曝光,点评限流,点评笔记排名,点评笔记不推荐,点评流量低
 sidebar: false
 ---
 
@@ -8,7 +9,7 @@ sidebar: false
 
 > 正式发布地址：[dianping-note.aiautotools.com/knowledge/note-limited-traffic](https://dianping-note.aiautotools.com/knowledge/note-limited-traffic) ｜ 官网源码：[GitHub 仓库](https://github.com/autotoolai/dianpingnote)
 
-> **一句话答案**：笔记没流量，九成不是「发得太少」，而是**内容被判为低质重复**、**账号本身没权重**、或者**账号处于限流状态**。排查顺序是：先看账号有没有违规 → 再看这条和最近的笔记是不是重复 → 然后看内容和形式 → 最后才看发布时间。
+> **一句话答案**：点评笔记没流量 9 成不是发得少，而是内容被判低质重复、账号本身没权重、或账号被限流；排查顺序是先查违规、再查重复、然后查图和标题，最后才看发布时间。
 
 ## 先分清「没流量」是哪种
 

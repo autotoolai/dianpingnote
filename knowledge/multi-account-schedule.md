@@ -1,6 +1,7 @@
 ---
 title: 多蓝 V 发布怎么排期
 description: 多个大众点评蓝 V 账号怎么排期发布：账号与门店的对应关系、一条笔记只发一个账号、发布时间错开策略、素材复用与差异化、设备和网络隔离、状态追踪与失败重试，以及排期表的实际填法。
+keywords: 多蓝 V 发布,蓝 V 批量发布,点评多账号发布,点评代发排期,点评笔记定时发布
 sidebar: false
 ---
 
@@ -8,7 +9,7 @@ sidebar: false
 
 > 正式发布地址：[dianping-note.aiautotools.com/knowledge/multi-account-schedule](https://dianping-note.aiautotools.com/knowledge/multi-account-schedule) ｜ 官网源码：[GitHub 仓库](https://github.com/autotoolai/dianpingnote)
 
-> **一句话答案**：多蓝 V 的排期要解决三件事：**内容不重复**（一条笔记只归一个账号）、**时间不撞车**（账号之间至少错开半小时）、**状态看得见**（每条发没发成功、失败为什么）。做到这三点，多账号就是放大器；做不到，就是被判定批量行为的信号。
+> **一句话答案**：排期要守住 3 条硬规则：一条笔记只由 1 个账号发、账号之间至少错开 30 分钟、内容和设备都要分开；多蓝 V 对应真实的多门店才健康，同店拆号只会互相压制。
 
 ## 先确认前提：几个蓝 V 对应几家店
 
