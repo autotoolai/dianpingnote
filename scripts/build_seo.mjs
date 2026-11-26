@@ -24,6 +24,7 @@ const SITE = {
     { title: '核心能力', prefix: ['index', 'collect', 'erchuang', 'publish', 'screenshots'] },
     { title: '上手与购买', prefix: ['pricing', 'get-started', 'faq', 'online-demo', 'contact'] },
     { title: '使用指南', prefix: ['guides/'] },
+    { title: '点评知识库', prefix: ['knowledge/'] },
     { title: '关于', prefix: ['about'] },
   ],
 }
@@ -92,8 +93,8 @@ function collectPages() {
     const slug = rel.replace(/\.md$/, '')
     const url = slug === 'index' ? '/' : `/${slug.replace(/\/index$/, '')}`
     const headings = [...raw.matchAll(/^##\s+(.+)$/gm)].map((m) => stripMd(m[1]))
-    const priority = slug === 'index' ? 1.0 : slug === 'faq' ? 0.7 : slug.startsWith('guides/') ? 0.6 : 0.8
-    const changefreq = slug === 'index' ? 'weekly' : slug.startsWith('guides/') ? 'monthly' : 'weekly'
+    const priority = slug === 'index' ? 1.0 : slug === 'faq' ? 0.7 : slug.startsWith('guides/') ? 0.6 : slug.startsWith('knowledge/') ? 0.7 : 0.8
+    const changefreq = slug === 'index' ? 'weekly' : slug.startsWith('guides/') || slug.startsWith('knowledge/') ? 'monthly' : 'weekly'
     return {
       slug,
       url,

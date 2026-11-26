@@ -152,6 +152,7 @@ export default defineConfig({
       { text: '价格', link: '/pricing' },
       { text: '联系我们', link: '/contact' },
       { text: '帮助中心', link: '/guides/getting-started' },
+      { text: '知识库', link: '/knowledge/' },
       { text: '常见问题', link: '/faq' },
     ],
     sidebar: [
@@ -169,6 +170,18 @@ export default defineConfig({
           { text: '采集与登录', link: '/guides/collect' },
           { text: '二创设置', link: '/guides/erchuang' },
           { text: '发布与定时', link: '/guides/publish' },
+        ],
+      },
+      {
+        text: '知识库',
+        items: [
+          { text: '知识库首页', link: '/knowledge/' },
+          { text: '蓝 V 是什么', link: '/knowledge/blue-v-what-is-it' },
+          { text: '没流量的原因', link: '/knowledge/note-limited-traffic' },
+          { text: '跨平台搬运风险', link: '/knowledge/cross-platform-repost' },
+          { text: '发布时间怎么选', link: '/knowledge/best-publish-time' },
+          { text: '多蓝 V 排期', link: '/knowledge/multi-account-schedule' },
+          { text: '被折叠或搜不到', link: '/knowledge/note-folded-hidden' },
         ],
       },
       {
