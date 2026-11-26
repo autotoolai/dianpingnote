@@ -103,15 +103,22 @@ function Get-ChangedRoutes {
   if (-not $cmd) { return ,$routes }
   Push-Location $SiteRoot
   try {
-    # 基准提交：CI 里 submodule 是 detached HEAD，HEAD~1 可能不存在。
-    # 先探一次，探不到就退回「全部推送」，不静默漏推。
+    # 基准提交：优先用 DEPLOY_BASE_SHA（父仓指针指的上一次部署的 submodule 提交）。
+    # 没有就用 HEAD~1。取不到就退回「全部推送」，不静默漏推。
     $base = $null
-    & git rev-parse --verify 'HEAD~1' 2>$null | Out-Null
-    if ($LASTEXITCODE -eq 0) { $base = 'HEAD~1' }
+    if ($env:DEPLOY_BASE_SHA) {
+      & git rev-parse --verify $env:DEPLOY_BASE_SHA 2>$null | Out-Null
+      if ($LASTEXITCODE -eq 0) { $base = $env:DEPLOY_BASE_SHA }
+    }
     if (-not $base) {
-      Write-Warning 'ChangedOnly: 取不到 HEAD~1，改成全量推送'
+      & git rev-parse --verify 'HEAD~1' 2>$null | Out-Null
+      if ($LASTEXITCODE -eq 0) { $base = 'HEAD~1' }
+    }
+    if (-not $base) {
+      Write-Warning 'ChangedOnly: 取不到 diff 基准，改成全量推送'
       return ,$null
     }
+    Write-Host "ChangedOnly: diff 基准 $base"
     $diff = & git diff --name-only $base 'HEAD' 2>$null
   } catch {
     $diff = @()
