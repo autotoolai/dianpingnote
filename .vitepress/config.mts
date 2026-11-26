@@ -180,10 +180,14 @@ export default defineConfig({
         ],
       },
     ],
-    socialLinks: [{ icon: 'wechat', link: '/contact' }],
+    socialLinks: [
+      { icon: 'wechat', link: '/contact' },
+      { icon: 'github', link: 'https://github.com/autotoolai/dianpingnote' },
+    ],
     footer: {
       message: 'Windows 桌面软件 · 笔记池与发布状态全部保存在本机',
-      copyright: `© ${new Date().getFullYear()} 点评<span class="zp-divider" aria-hidden="true"></span>笔记助手`,
+      // 页脚带官网源码链接：给搜索引擎和访客一个可抓取的 GitHub 入口
+      copyright: `© ${new Date().getFullYear()} 点评<span class="zp-divider" aria-hidden="true"></span>笔记助手 · <a href="https://github.com/autotoolai/dianpingnote" target="_blank" rel="noopener">官网源码</a>`,
     },
     editLink: false,
     outline: { level: [2, 3] },

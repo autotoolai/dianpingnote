@@ -1,6 +1,7 @@
 {
-  "name": "dianpingnote-website",
+  "name": "dianpingnote",
   "private": true,
+  "description": "点评笔记助手官网源码 · VitePress + SEO/GEO 构建链",
   "type": "module",
   "scripts": {
     "dev": "node scripts/build_demo.mjs && vitepress dev",

@@ -33,12 +33,15 @@ const stage = args.includes('--stage') ? args[args.indexOf('--stage') + 1] : 'di
 
 /* ---------- 工具 ---------- */
 
+/** 不作为站点页面收录的 Markdown：README 是仓库说明，CLAUDE 是 AI 协作说明 */
+const NON_PAGE_MD = new Set(['README.md', 'CLAUDE.md'])
+
 function walk(dir, acc = []) {
   for (const name of readdirSync(dir)) {
     if (name === 'node_modules' || name === 'dist' || name === 'cache' || name.startsWith('.')) continue
     const full = join(dir, name)
     if (statSync(full).isDirectory()) walk(full, acc)
-    else if (name.endsWith('.md')) acc.push(full)
+    else if (name.endsWith('.md') && !NON_PAGE_MD.has(name)) acc.push(full)
   }
   return acc
 }
@@ -50,7 +53,8 @@ function frontmatter(text) {
   if (end < 0) return {}
   const out = {}
   for (const line of text.slice(3, end).split('\n')) {
-    const m = line.match(/^([A-Za-z_][A-Za-z0-9_]*):\s*(.*)$/)
+    // Windows 检出是 CRLF，行尾会残留 \r，导致正则匹配失败
+    const m = line.replace(/\r$/, '').match(/^([A-Za-z_][A-Za-z0-9_]*):\s*(.*)$/)
     if (m) out[m[1]] = m[2].replace(/^['"]|['"]$/g, '').trim()
   }
   return out

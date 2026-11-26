@@ -13,14 +13,24 @@
  *   硬错误（退出码 1）：接口没实现 —— 用户一点就报错
  *   提示（退出码 0）：读接口走通用兜底 —— 页面能开但数据是空的
  */
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const SITE_ROOT = resolve(here, '..')
 const REPO_ROOT = resolve(SITE_ROOT, '..', '..')
-const APP_JS = resolve(REPO_ROOT, 'packages', 'admin', 'static', 'js', 'app.js')
+const APP_JS = process.env.DIANPING_PRODUCT_STATIC
+  ? resolve(process.env.DIANPING_PRODUCT_STATIC, 'js', 'app.js')
+  : resolve(REPO_ROOT, 'packages', 'admin', 'static', 'js', 'app.js')
+
+// 公开仓库里没有产品源码：无法核对覆盖率，直接跳过（不是错误）。
+// 覆盖率门禁在本机完整仓库里仍然生效。
+if (!existsSync(APP_JS)) {
+  console.log(`[demo-coverage] 未找到产品前端（${APP_JS}），跳过接口覆盖率检查。`)
+  console.log('[demo-coverage] 公开仓库不包含产品源码，这是预期行为。')
+  process.exit(0)
+}
 
 const APP_SRC = readFileSync(APP_JS, 'utf8')
 

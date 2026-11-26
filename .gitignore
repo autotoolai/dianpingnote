@@ -2,4 +2,9 @@ node_modules/
 .vitepress/dist/
 .vitepress/cache/
 .wrangler/
+
+# faq.md 是构建产物：由 scripts/build_seo.mjs 从 data/faq.json 生成，不要手改
 faq.md
+
+# 演示站是构建产物：node scripts/build_demo.mjs 从产品前端复制生成
+public/demo/

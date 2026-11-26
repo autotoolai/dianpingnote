@@ -11,6 +11,14 @@
  *  3. 用 esbuild 把 demo/src/*.js 打成 public/demo/demo.js。
  *
  * 产物（public/demo/）不入库，随构建生成。
+ *
+ * 两种运行环境：
+ *  - 完整仓库（本机）：产品在 apps/website 的同级上层，能读到 packages/admin/static，
+ *    构建出带演示站的完整站点。
+ *  - 公开仓库（GitHub CI / 访客克隆）：产品源码不在仓库里，读不到产品前端。
+ *    这时跳过演示站，站点照常构建，只是没有 /demo/ 目录。
+ *    演示站的界面本身就是产品界面，对外可见的是线上站点的 /demo/，
+ *    那个页面由本机完整仓库构建后部署，与本仓库是否开源无关。
  */
 import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
@@ -21,14 +29,18 @@ const here = dirname(fileURLToPath(import.meta.url))
 const SITE_ROOT = resolve(here, '..')
 const REPO_ROOT = resolve(SITE_ROOT, '..', '..')
 
-const ADMIN_STATIC = join(REPO_ROOT, 'packages', 'admin', 'static')
+const ADMIN_STATIC = process.env.DIANPING_PRODUCT_STATIC
+  ? resolve(process.env.DIANPING_PRODUCT_STATIC)
+  : join(REPO_ROOT, 'packages', 'admin', 'static')
 const DEMO_SRC = join(SITE_ROOT, 'demo', 'src')
 const DEMO_MEDIA = join(SITE_ROOT, 'demo', 'media')
 const OUT_DIR = join(SITE_ROOT, 'public', 'demo')
 
 if (!existsSync(ADMIN_STATIC)) {
-  console.error(`[demo] 找不到产品静态目录：${ADMIN_STATIC}`)
-  process.exit(1)
+  // 公开仓库里没有产品源码，跳过演示站，站点其余部分照常构建。
+  console.log(`[demo] 未找到产品静态目录（${ADMIN_STATIC}），跳过演示站构建。`)
+  console.log('[demo] 公开仓库不包含产品源码，这是预期行为。')
+  process.exit(0)
 }
 
 /* ---------- 1. 清空并复制产品界面 ---------- */

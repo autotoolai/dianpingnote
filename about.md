@@ -33,9 +33,20 @@ description: 关于点评笔记助手：我们是谁，产品定位，数据与�
 | 产品名 | 点评笔记助手（DianPingNote） |
 | 宣传语 | 设定一次，采集、二创、发布全自动 |
 | 官网 | https://dianping-note.aiautotools.com |
+| 官网源码 | https://github.com/autotoolai/dianpingnote （VitePress 源码与 SEO/GEO 构建链，公开可核对） |
 | 形式 | Windows 桌面应用（桌面窗口 + 系统托盘 + 本机服务） |
 | 本地存储 | SQLite（笔记、素材、发布状态） |
 | 官网技术 | 静态站，Cloudflare Pages 全球边缘分发；本站不收集访客数据 |
+
+## 官网源码是公开的
+
+产品本身是商业软件，**源码不公开**。但这个官网的源码是公开的：
+
+- 仓库：<https://github.com/autotoolai/dianpingnote>
+- 内容：全部页面文案、主题组件、`sitemap.xml` / `robots.txt` / `llms.txt` 的生成脚本
+- 用途：你可以核对我们的说法、复刻这个站点，或者拿去改造成自己的官网
+
+我们的定价、功能边界、数据流向都写在这个仓库和本站页面上，欢迎逐条对照。
 
 ## 隐私与合规
 
