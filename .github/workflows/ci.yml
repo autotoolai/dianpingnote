@@ -1,0 +1,51 @@
+name: CI
+
+# 公开仓的构建门禁。
+# 公开仓不含产品源码，所以 build_demo.mjs 会跳过演示站、check_demo_coverage.mjs
+# 会跳过接口核对——这两步在私有产品仓的完整环境里仍然生效。
+# 这里守住的是「站点能构建 + SEO/GEO 产物齐全 + 清单与页面一致」。
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: 安装依赖
+        run: npm ci
+
+      - name: 构建（含 faq 生成、sitemap / robots / llms.txt 产出与清单审计）
+        run: npm run build
+
+      - name: 校验 SEO 产物齐全
+        run: |
+          set -e
+          for f in sitemap.xml robots.txt llms.txt llms-full.txt; do
+            test -s ".vitepress/dist/$f" || { echo "缺少产物：$f"; exit 1; }
+            echo "ok: $f"
+          done
+
+      - name: 校验产品源码没有混入公开仓
+        # 公开仓只放官网内容。万一有人把 packages/ 复制进来，门禁在这里挡住。
+        run: |
+          set -e
+          if git ls-files | grep -qE '^(packages/|.*admin/static/)'; then
+            echo "公开仓里出现了产品源码路径，拒绝合并："
+            git ls-files | grep -E '^(packages/|.*admin/static/)'
+            exit 1
+          fi
+          echo "ok: 未混入产品源码"
