@@ -14,6 +14,11 @@ description: 点评笔记助手的发布能力：把可发布笔记认领给经�
 
 <MediaFigure src="screenshots/05-publish-schedule.webp" alt="点评笔记助手发布页：定时任务设置，勾选蓝 V 并设定每天执行时刻" caption="发布 → 定时任务：勾选参与的蓝 V，设定本机每天执行时刻" />
 
+<div class="zp-answer">
+  <p class="zp-answer__label">一句话答案</p>
+  <p class="zp-answer__text">点评笔记助手的发布规则是 1 条笔记只发 1 个蓝 V：先从本机认领「可发布」的笔记，按你设定的本机时刻串行上传到大众点评经营宝下的多个蓝 V。后台运行不弹浏览器，上传失败会自动释放认领重新排队，连续失败达上限的笔记会被隔离待人工处理。</p>
+</div>
+
 ## 账号与蓝 V
 
 - **经营宝**：共享登录，一次扫码，所有蓝 V 复用。

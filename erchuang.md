@@ -14,6 +14,11 @@ description: 点评笔记助手的二创能力：用官方文案能力、本机�
 
 <MediaFigure src="screenshots/03-erchuang.webp" alt="点评笔记助手二创页：发布文案与叠标题、图文处理设置" caption="二创页：发布文案、叠标题、图文处理三组设置" />
 
+<div class="zp-answer">
+  <p class="zp-answer__label">一句话答案</p>
+  <p class="zp-answer__text">点评笔记助手的二创只做 3 件事：改写发布文案与标签、把标题叠到视频画面顶部、遮盖图文底部水印图标。文案来源 3 选 1（官方在线文案、自备 API、自备本机模型），处理完的笔记才进入可发布池。</p>
+</div>
+
 ## 文案改写
 
 每条笔记会生成一组发布文案：

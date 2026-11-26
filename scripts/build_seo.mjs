@@ -14,6 +14,8 @@ import {
   SITE as SEO_SITE,
   heroAnswer,
   pricingAnswer,
+  pageAnswers,
+  faqAnswer,
   citeScenes,
   facts,
   siteStatement,
@@ -125,6 +127,49 @@ function collectPages() {
 
 /* ---------- 阶段 1：生成 FAQ 页 ---------- */
 
+/**
+ * 顶层落地页的答案胶囊与页面标题：直接从源 Markdown 里解析。
+ *
+ * 为什么从源文件解析而不是从 seo_config 取：
+ *   页面上的胶囊是 `<div class="zp-answer">`（要样式），源文件才是唯一真源。
+ *   md 镜像是给 AI 读的纯 Markdown，插件会把 HTML 整段剥掉，胶囊就消失了。
+ *   这里把源文件里的胶囊取回来，按 Markdown 形态补进镜像 —— 一份内容，两种呈现。
+ */
+function readPageMeta(relMd) {
+  const src = join(SRC, relMd)
+  if (!existsSync(src)) return null
+  const raw = readFileSync(src, 'utf8')
+  const answer = raw.match(/<p class="zp-answer__text">([\s\S]*?)<\/p>/)?.[1]?.trim() || ''
+  // 页面标题：优先取页头里的 <h1>，首页没有（走 HomeHero 组件），退回 frontmatter
+  const h1 = raw.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1]?.trim() || ''
+  const fm = frontmatter(raw)
+  return { answer, h1: h1 || fm.title || '' }
+}
+
+/**
+ * 给 md 镜像补上「页面标题 + 一句话答案」。
+ *
+ * 镜像缺两样东西的根因：插件用 remark 解析源 Markdown，HTML 块会被整段剥掉，
+ * 于是顶层页面的 `<div class="zp-answer">` 与 `<h1>` 都没进镜像。
+ * AI 读到的镜像只剩一串表格和段落，没有结论 —— 这正是 GEO 里最贵的损失。
+ *
+ * 只在缺失时补：知识库与指南的源文件本来就是 Markdown 形态（有 H1 与引用块），
+ * 不重复注入。
+ */
+function injectAnswerCapsule(md, meta) {
+  if (!meta) return md
+  const m = md.match(/^(---\r?\n[\s\S]*?\r?\n---\r?\n)([\s\S]*)$/)
+  if (!m) return md
+  const [, fm, body] = m
+  const add = []
+  if (meta.h1 && !/^#\s+/m.test(body)) add.push(`# ${meta.h1}`)
+  if (meta.answer && !/^>\s*\*\*一句话答案\*\*/m.test(body)) {
+    add.push(`> **一句话答案**：${meta.answer}`)
+  }
+  if (!add.length) return md
+  return `${fm}\n${add.join('\n\n')}\n\n${body.replace(/^\n+/, '')}`
+}
+
 function renderFaq() {
   const data = JSON.parse(readFileSync(join(SRC, 'data', 'faq.json'), 'utf8'))
   const body = [
@@ -136,6 +181,11 @@ function renderFaq() {
     '<div class="zp-page-head">',
     '  <h1>常见问题</h1>',
     `  <p>关于${SITE.name}被问得最多的问题。找不到答案可以看 <a href="/guides/troubleshooting">故障排查</a>，或 <a href="/get-started#contact">联系销售</a>。</p>`,
+    '</div>',
+    '',
+    '<div class="zp-answer">',
+    '  <p class="zp-answer__label">一句话答案</p>',
+    `  <p class="zp-answer__text">${faqAnswer}</p>`,
     '</div>',
     '',
   ]
@@ -288,21 +338,31 @@ function rewriteMdLinks(md) {
 }
 
 /**
- * 改写 dist 下所有 md 镜像的站内链接。
+ * 改写 dist 下所有 md 镜像：站内链接改写 + 补答案胶囊。
  *
- * vitepress-plugin-llms 负责产出镜像，但它不做链接改写。
+ * vitepress-plugin-llms 负责产出镜像，但它不做链接改写，也不保留 HTML 块。
  * 我们在这里补上：这一步必须在插件产出镜像之后、llms-full.txt 注入之前。
  */
 function rewriteMdMirrors() {
   const files = walk(DIST).filter((f) => f.endsWith('.md'))
-  let n = 0
+  let links = 0
+  let capsules = 0
   for (const f of files) {
     const body = readFileSync(f, 'utf8')
-    if (!/\]\(\//.test(body)) continue
-    writeFileSync(f, rewriteMdLinks(body), 'utf8')
-    n++
+    let out = body
+    if (/\]\(\//.test(out)) {
+      out = rewriteMdLinks(out)
+      links++
+    }
+    // 镜像路径是相对 dist 的：collect.md -> 源文件 collect.md
+    const rel = relative(DIST, f).split(sep).join('/')
+    const meta = readPageMeta(rel)
+    const injected = injectAnswerCapsule(out, meta)
+    if (injected !== out) capsules++
+    if (injected !== body) writeFileSync(f, injected, 'utf8')
   }
-  if (n) console.log(`[seo] md 镜像站内链接改写（${n} 个文件）`)
+  if (links) console.log(`[seo] md 镜像站内链接改写（${links} 个文件）`)
+  if (capsules) console.log(`[seo] md 镜像补齐标题与答案胶囊（${capsules} 个文件）`)
 }
 
 /**
@@ -369,8 +429,78 @@ function writeLlmsFull(pages) {
     head.push(`- [${q}](${B}${path})`)
   }
   head.push('', '## 站点性质', '', siteStatement, '', '---', '')
-  writeFileSync(target, head.join('\n') + body, 'utf8')
-  console.log('[seo] llms-full.txt（已注入事实层与引用场景）')
+  writeFileSync(target, head.join('\n') + injectFullAnswers(body), 'utf8')
+  console.log('[seo] llms-full.txt（已注入事实层、引用场景与各页答案）')
+}
+
+/**
+ * 给 llms-full.txt 的每一页分块补上答案胶囊。
+ *
+ * llms-full.txt 由插件把源 Markdown 拼起来，HTML 块同样被剥掉，
+ * 于是顶层页面在全文层里也只有表格与段落，没有结论。
+ * 这里按分块（每块以 `url: ...` 开头）定位页面，回填引用块形态的答案。
+ */
+function injectFullAnswers(body) {
+  const chunks = body.split(/\n(?=---\nurl: )/)
+  let n = 0
+  const out = chunks.map((chunk) => {
+    const m = chunk.match(/^---\nurl: https?:\/\/[^/]+\/(.+?)\.md\n/)
+    if (!m) return chunk
+    const rel = m[1]
+    const meta = readPageMeta(rel === 'index' ? 'index.md' : `${rel}.md`)
+    if (!meta?.answer) return chunk
+    // 已经带答案的块不重复注入
+    if (/^>\s*\*\*一句话答案\*\*/m.test(chunk)) return chunk
+    // 插在 frontmatter 之后、正文之前
+    const idx = chunk.indexOf('\n---', 4)
+    if (idx < 0) return chunk
+    const at = chunk.indexOf('\n', idx + 4)
+    if (at < 0) return chunk
+    n++
+    return `${chunk.slice(0, at)}\n\n> **一句话答案**：${meta.answer}\n${chunk.slice(at)}`
+  })
+  if (n) console.log(`[seo] llms-full.txt 补齐各页答案（${n} 个分块）`)
+  return out.join('\n')
+}
+
+/**
+ * 校验源 Markdown 的答案胶囊与 seo_config.mjs 是否一致。
+ *
+ * 为什么要两份：seo_config 是 llms.txt / llms-full.txt 事实层的真源，
+ * 源 Markdown 是页面渲染的真源。两边一旦漂移，AI 读到的答案就前后矛盾。
+ * 这里把不一致直接报出来，让构建失败而不是悄悄发版。
+ */
+function verifyAnswerConsistency() {
+  const problems = []
+  for (const [route, answer] of Object.entries(pageAnswers)) {
+    const rel = route === '' ? 'index.md' : `${route}.md`
+    const src = join(SRC, rel)
+    if (!existsSync(src)) {
+      problems.push(`${rel}: seo_config 有答案但源文件不存在`)
+      continue
+    }
+    const raw = readFileSync(src, 'utf8')
+    const got = raw.match(/<p class="zp-answer__text">([\s\S]*?)<\/p>/)?.[1]?.trim() || ''
+    if (!got) problems.push(`${rel}: 源文件缺 zp-answer__text`)
+    else if (got !== answer) problems.push(`${rel}: 页面答案与 seo_config.mjs 不一致`)
+  }
+  // 反向：源文件有胶囊但真源里没有
+  for (const rel of ['index.md', 'pricing.md', 'collect.md', 'erchuang.md', 'publish.md',
+    'screenshots.md', 'get-started.md', 'online-demo.md', 'contact.md', 'about.md']) {
+    const route = rel === 'index.md' ? '' : rel.replace(/\.md$/, '')
+    if (pageAnswers[route] === undefined) {
+      const raw = readFileSync(join(SRC, rel), 'utf8')
+      if (/<p class="zp-answer__text">/.test(raw)) {
+        problems.push(`${rel}: 源文件有答案胶囊，但 seo_config.mjs 的 pageAnswers 里没有`)
+      }
+    }
+  }
+  if (problems.length) {
+    console.error('[seo] 答案胶囊真源不一致：\n  ' + problems.join('\n  '))
+    process.exitCode = 1
+  } else {
+    console.log(`[seo] 答案胶囊真源一致（${Object.keys(pageAnswers).length} 个顶层页面）`)
+  }
 }
 
 /** 交叉检查：frontmatter 是否缺 title/description；sitemap / llms.txt 是否收录了未构建页面 */
@@ -415,6 +545,7 @@ mkdirSync(DIST, { recursive: true })
 
 if (stage === 'src') {
   renderFaq()
+  verifyAnswerConsistency()
 } else {
   const pages = collectPages()
   writeSitemap(pages)

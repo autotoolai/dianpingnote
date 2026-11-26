@@ -82,7 +82,9 @@ export default defineConfig({
   description: SITE.description,
   cleanUrls: true,
   lastUpdated: true,
-  srcExclude: ['README.md'],
+  // CLAUDE.md 是 AI 协作说明，不该出现在站点与 llms-full.txt 里。
+  // 不排除的话，AI 读全文层会读到一堆内部指令，把内容稀释掉。
+  srcExclude: ['README.md', 'CLAUDE.md'],
   ignoreDeadLinks: true,
   sitemap: { hostname: SITE.origin },
 
@@ -290,7 +292,7 @@ export default defineConfig({
         // llms.txt 由 scripts/build_seo.mjs 生成（含分组与事实速览），这里关掉避免两个写入方打架
         // 插件仍负责 llms-full.txt 与每页 .md 版本
         generateLLMsTxt: false,
-        ignoreFiles: ['README.md'],
+        ignoreFiles: ['README.md', 'CLAUDE.md'],
       }),
     ],
     server: { port: 5175 },

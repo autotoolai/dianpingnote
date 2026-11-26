@@ -16,7 +16,7 @@
  */
 import { existsSync, readFileSync, writeFileSync, readdirSync, mkdirSync } from 'node:fs'
 import { join, relative, sep, resolve } from 'node:path'
-import { SITE, citeScenes, facts, heroAnswer } from './seo_config.mjs'
+import { SITE, citeScenes, facts, heroAnswer, pageAnswers } from './seo_config.mjs'
 
 const ROOT = process.cwd()
 const DIST = join(ROOT, '.vitepress', 'dist')
@@ -121,6 +121,65 @@ if (mdBad === 0) {
 }
 
 /* ---------- 内容质量层 ---------- */
+
+/**
+ * 顶层落地页的答案必须落到 AI 可读层（md 镜像 + llms-full.txt）。
+ *
+ * 这是本审计最该盯的一条：顶层页面的胶囊在页面上是 HTML div，
+ * 插件生成 Markdown 时会把 HTML 整段剥掉，答案就没了。
+ * 页面看着没问题、AI 却读不到结论 —— 这类损失只有从产物层查才看得见。
+ */
+const TOP_ROUTES = ['', 'pricing', 'collect', 'erchuang', 'publish', 'screenshots',
+  'get-started', 'online-demo', 'contact', 'about']
+
+const llmsFullPathForTop = join(DIST, 'llms-full.txt')
+const llmsFullText = existsSync(llmsFullPathForTop)
+  ? readFileSync(llmsFullPathForTop, 'utf8')
+  : ''
+
+let topMirrorBad = 0
+let topFullBad = 0
+for (const route of TOP_ROUTES) {
+  const label = route || 'index'
+  // 首页没有 md 镜像：插件默认排除首页（excludeIndexPage），
+  // 首页内容又几乎全是 Vue 组件与 HTML 块，剥出来是空的，没有镜像价值。
+  // 首页的结论走 llms-full.txt 的头部事实层，那里单独校验。
+  if (route === '') {
+    if (!llmsFullText.includes(pageAnswers[''])) {
+      topFullBad++
+      ok(`geo-top-answer-full:${label}`, false, 'llms-full.txt 里缺首页的一句话答案')
+    }
+    continue
+  }
+  const mdRel = `${route}.md`
+  const mdPath = join(DIST, mdRel)
+  if (!existsSync(mdPath)) {
+    topMirrorBad++
+    ok(`geo-top-answer-mirror:${label}`, false, `缺 md 镜像 ${mdRel}`)
+    continue
+  }
+  const md = readFileSync(mdPath, 'utf8')
+  const capsule = md.match(/^>\s*\*\*一句话答案\*\*：(.+)$/m)?.[1]?.trim()
+  if (!capsule) {
+    topMirrorBad++
+    ok(`geo-top-answer-mirror:${label}`, false, `${mdRel} 里没有一句话答案`)
+    continue
+  }
+  // 镜像还要有页面标题：没有 H1 的页 AI 无法定位段落
+  if (!/^#\s+/m.test(md)) {
+    topMirrorBad++
+    ok(`geo-top-answer-title:${label}`, false, `${mdRel} 里没有页面标题`)
+  }
+  // 全文层也要有同一句结论
+  if (!llmsFullText.includes(capsule)) {
+    topFullBad++
+    ok(`geo-top-answer-full:${label}`, false, `llms-full.txt 里缺 ${mdRel} 的答案`)
+  }
+}
+if (topMirrorBad === 0 && topFullBad === 0) {
+  ok('geo-top-answers-reachable', true,
+    `${TOP_ROUTES.length} 个顶层页面的答案都进了 AI 可读层（md 镜像与 llms-full.txt）`)
+}
 
 /**
  * 答案胶囊下限：太短没有信息量，AI 引用后读者拿不到答案。

@@ -9,6 +9,11 @@ description: 关于点评笔记助手：我们是谁，产品定位，数据与�
   <p>点评笔记助手（DianPingNote）是一款给点评门店用的 Windows 桌面软件：把「找素材 → 改内容 → 多号发布」这件事做成一条本机流水线。</p>
 </div>
 
+<div class="zp-answer">
+  <p class="zp-answer__label">一句话答案</p>
+  <p class="zp-answer__text">点评笔记助手（DianPingNote）是一款给点评门店用的 Windows 桌面软件，把「找素材 → 改内容 → 多号发布」这 3 步做成一条本机流水线。笔记、素材和发布状态全部保存在本机 SQLite 数据库，官网公开的只有说明文档，不开源产品源码。</p>
+</div>
+
 ## 我们做这个的原因
 
 做点评内容的门店，通常卡在三件事上：

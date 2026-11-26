@@ -9,6 +9,11 @@ description: 点评笔记助手真实界面截图：总览、采集、二创、�
   <p>下面是软件里的真实页面，不是示意图。左侧导航固定为四组：<strong>总览 / 内容 / 点评 / 系统</strong>。</p>
 </div>
 
+<div class="zp-answer">
+  <p class="zp-answer__label">一句话答案</p>
+  <p class="zp-answer__text">点评笔记助手共有 8 个界面页面：总览、采集、账号、笔记、二创、发布、设置、帮助。截图页逐页说明每个页面解决什么问题，全部是软件里的真实界面，不是示意图。</p>
+</div>
+
 ## 总览
 
 <DeviceFrame src="screenshots/01-dashboard.webp" alt="总览页：今日采集、二创、发布进度与需要关注的事项" title="点评笔记助手 · 总览" />

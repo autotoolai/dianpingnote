@@ -10,7 +10,7 @@ description: 点评笔记助手是给门店运营用的 Windows 软件：把同�
 
 <div class="zp-answer">
   <p class="zp-answer__label">一句话答案</p>
-  <p class="zp-answer__text">点评笔记助手是一款 Windows 桌面软件：从小红书、抖音、快手、B站采集笔记，本机改写文案、把标题叠到视频顶部或遮盖图文水印，再按每日定时发布到大众点评经营宝下的多个蓝 V。笔记、素材和发布状态全部保存在本机。</p>
+  <p class="zp-answer__text">点评笔记助手是一款 Windows 桌面软件：从小红书、抖音、快手、B站这 4 个平台采集笔记，本机改写文案、把标题叠到视频顶部或遮盖图文水印，再按每日定时发布到大众点评经营宝下的多个蓝 V。笔记、素材和发布状态全部保存在本机。</p>
 </div>
 
 <section class="zp-section">
