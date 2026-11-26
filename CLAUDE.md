@@ -57,6 +57,7 @@ npm install
 npm run build        # 含 demo 构建 + 覆盖率检查 + SEO 生成 + sitemap 审计
 npm run check:demo   # 单独跑接口覆盖率检查
 npm run dev          # 本地预览 http://127.0.0.1:5175
+npm run verify       # 四道门禁：GEO 写法 / 死链 / llms.txt 格式 / GEO 审计
 ```
 
 ## 硬约束
@@ -65,17 +66,28 @@ npm run dev          # 本地预览 http://127.0.0.1:5175
 2. `data/faq.json` 是 FAQ 的唯一数据源，`faq.md` 是它的构建产物，不要手改 `faq.md`。
 3. `public/demo/` 是构建产物，不入库。
 4. 改产品前端（`packages/admin/static/js/app.js`）后要跑 `npm run check:demo`，确认假数据层跟上了接口变化。
-5. 域名出现在 `config.mts` 的 `SITE.origin` 和 `scripts/build_seo.mjs` 里，换域名要一起改。
+5. 域名出现在 `config.mts` 的 `SITE.origin` 和 `scripts/seo_config.mjs` 里，换域名要一起改。
+6. 关键词、答案胶囊、事实要点、引用场景只在 `scripts/seo_config.mjs` 里维护一份，改别处会被审计拦下。
 
 ## 部署
 
-Cloudflare Pages 项目 `dianpingnote`，分支 `master`。
+**生产部署由私有父仓的 GitHub Actions 负责**（`futianren/DianPing_Publisher` 的 `.github/workflows/website_deploy.yml`）：
+推送父仓 master → 构建 → 部署 Pages → 通知搜索引擎。
+
+本仓只跑 CI 门禁（`.github/workflows/ci.yml`），不碰生产。原因是演示站 `/demo/` 的产品前端在 `packages/admin/static/`，公开仓读不到；公开仓构建的产物会覆盖掉线上完整的站点。
+
+手动部署（仅本机有完整源码时）：
 
 ```bash
 npm run build
 npx --yes wrangler@4 pages deploy .vitepress/dist --project-name=dianpingnote --branch=master
 ```
 
-发版后跑收录通知（父仓 `scripts/website_seo_notify.ps1`）。
+发版后跑收录通知：
+
+```bash
+pwsh -File scripts/website_seo_notify.ps1          # 本仓这份是权威副本
+pwsh -File scripts/website_seo_notify.ps1 -DryRun  # 只看会推哪些 URL
+```
 
 权威文档在父仓 `docs/website/`。
