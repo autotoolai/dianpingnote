@@ -16,6 +16,9 @@
 # 旧文案别名
 /dianpingnote / 301
 
+# 页面合并：在线体验并入界面一览（截图 + 可点演示）
+/online-demo /screenshots 301
+
 # 百度站点验证：Pages 的 cleanUrls 会把 .html 308 跳到无扩展名路径，
 # 而百度只认带 .html 的原始文件名。这里用 200 改写绕过跳转，直接吐验证码。
 # public/ 下需同时放同名 .html 与无扩展名两份。

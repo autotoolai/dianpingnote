@@ -4,12 +4,14 @@ sidebar: false
 description: 点评笔记助手按成功发布条数计费，单条 1 元起。月订阅 25 元 30 条、50 元 100 条、120 元 300 条；新用户 7 天试用含 10 条，发不出去的不扣条。
 ---
 
-<div class="zp-page-head">
-  <h1 class="zp-display">价格：按成功发布的条数算</h1>
-  <p>
-    计费单位是<strong>可发布条数</strong>：二创完成并且在点评侧发布成功，才算 1 条。
-    只采集、没发出去的笔记不扣条数。官方云端文案 API 的费用已含在条数里，不另收。
-  </p>
+<div class="zp-shell">
+  <div class="zp-page-head">
+    <h1 class="zp-display">价格：按成功发布的条数算</h1>
+    <p>
+      计费单位是<strong>可发布条数</strong>：二创完成并且在点评侧发布成功，才算 1 条。
+      只采集、没发出去的笔记不扣条数。官方云端文案 API 的费用已含在条数里，不另收。
+    </p>
+  </div>
 </div>
 
 <div class="zp-answer">

@@ -210,19 +210,58 @@ export default defineConfig({
     logo: '/brand-logo.svg',
     // 「点评」与「笔记」之间加一道渐变划线
     siteTitle: '点评<span class="zp-divider" aria-hidden="true"></span>笔记助手',
+    // 导航压到 6 项。采集 / 二创 / 发布 / 常见问题这些落地页不再占顶部位置，
+    // 改由 /feature 内部小节引出（URL 保留，SEO 主场不丢），其余收进「文档」下拉。
     nav: [
       { text: '首页', link: '/' },
-      { text: '采集', link: '/collect' },
-      { text: '二创', link: '/erchuang' },
-      { text: '发布', link: '/publish' },
-      { text: '功能与原理', link: '/feature' },
-      { text: '界面一览', link: '/screenshots' },
-      { text: '在线体验', link: '/online-demo' },
+      { text: '功能', link: '/feature' },
+      { text: '界面演示', link: '/screenshots' },
       { text: '价格', link: '/pricing' },
+      {
+        text: '文档',
+        items: [
+          {
+            text: '开始使用',
+            items: [
+              { text: '开始使用', link: '/get-started' },
+              { text: '安装包与运行环境', link: '/guides/install' },
+            ],
+          },
+          {
+            text: '使用指南',
+            items: [
+              { text: '首次上手', link: '/guides/getting-started' },
+              { text: '采集与登录', link: '/guides/collect' },
+              { text: '二创设置', link: '/guides/erchuang' },
+              { text: '发布与定时', link: '/guides/publish' },
+              { text: '状态词典', link: '/guides/status-glossary' },
+              { text: '故障排查', link: '/guides/troubleshooting' },
+              { text: '数据与隐私', link: '/guides/data-and-privacy' },
+            ],
+          },
+          {
+            text: '点评知识库',
+            items: [
+              { text: '知识库首页', link: '/knowledge/' },
+              { text: '蓝 V 是什么', link: '/knowledge/blue-v-what-is-it' },
+              { text: '没流量的原因', link: '/knowledge/note-limited-traffic' },
+              { text: '跨平台搬运风险', link: '/knowledge/cross-platform-repost' },
+              { text: '发布时间怎么选', link: '/knowledge/best-publish-time' },
+              {text: '多蓝 V 排期', link: '/knowledge/multi-account-schedule' },
+              { text: '被折叠或搜不到', link: '/knowledge/note-folded-hidden' },
+            ],
+          },
+          {
+            text: '参考',
+            items: [
+              { text: '常见问题', link: '/faq' },
+              { text: '更新日志', link: '/changelog' },
+              { text: '服务条款与免责声明', link: '/terms' },
+            ],
+          },
+        ],
+      },
       { text: '联系我们', link: '/contact' },
-      { text: '帮助中心', link: '/guides/getting-started' },
-      { text: '知识库', link: '/knowledge/' },
-      { text: '常见问题', link: '/faq' },
     ],
     sidebar: [
       {
@@ -230,6 +269,7 @@ export default defineConfig({
         items: [
           { text: '开始使用', link: '/get-started' },
           { text: '安装包与运行环境', link: '/guides/install' },
+          { text: '界面演示', link: '/screenshots' },
         ],
       },
       {
@@ -260,6 +300,9 @@ export default defineConfig({
           { text: '状态词典', link: '/guides/status-glossary' },
           { text: '故障排查', link: '/guides/troubleshooting' },
           { text: '数据与隐私', link: '/guides/data-and-privacy' },
+          { text: '常见问题', link: '/faq' },
+          { text: '更新日志', link: '/changelog' },
+          { text: '服务条款与免责声明', link: '/terms' },
         ],
       },
     ],
@@ -270,7 +313,7 @@ export default defineConfig({
     footer: {
       message: 'Windows 桌面软件 · 笔记池与发布状态全部保存在本机',
       // 页脚带官网源码链接：给搜索引擎和访客一个可抓取的 GitHub 入口
-      copyright: `© ${new Date().getFullYear()} 点评<span class="zp-divider" aria-hidden="true"></span>笔记助手 · <a href="https://github.com/autotoolai/dianpingnote" target="_blank" rel="noopener">官网源码</a>`,
+      copyright: `© ${new Date().getFullYear()} 点评<span class="zp-divider" aria-hidden="true"></span>笔记助手 · <a href="/about">关于</a> · <a href="/changelog">更新日志</a> · <a href="/terms">服务条款</a> · <a href="https://github.com/autotoolai/dianpingnote" target="_blank" rel="noopener">官网源码</a>`,
     },
     editLink: false,
     outline: { level: [2, 3] },
@@ -280,7 +323,8 @@ export default defineConfig({
     // 微信联系入口（ContactWechat 组件读取）
     wechatId: 'ren_mo_mo',
     wechatQr: 'wechat-qr-code.png',
-    downloadUrl: '',
+    // 安装包直链。留空时页面显示「微信获取安装包」；发布直链后填这里即自动变成下载按钮。
+    downloadUrl: process.env.WEBSITE_DOWNLOAD_URL || '',
     imgCdn: '',
   } as any,
 

@@ -2,12 +2,11 @@
 title: 多蓝 V 发布怎么排期
 description: 多个大众点评蓝 V 账号怎么排期发布：账号与门店的对应关系、一条笔记只发一个账号、发布时间错开策略、素材复用与差异化、设备和网络隔离、状态追踪与失败重试，以及排期表的实际填法。
 keywords: 多蓝 V 发布,蓝 V 批量发布,点评多账号发布,点评代发排期,点评笔记定时发布
-sidebar: false
 ---
 
 # 多蓝 V 发布怎么排期
 
-> 正式发布地址：[dianping-note.aiautotools.com/knowledge/multi-account-schedule](https://dianping-note.aiautotools.com/knowledge/multi-account-schedule) ｜ 官网源码：[GitHub 仓库](https://github.com/autotoolai/dianpingnote)
+<div class="zp-meta">本文正式地址：<a href="https://dianping-note.aiautotools.com/knowledge/multi-account-schedule">dianping-note.aiautotools.com/knowledge/multi-account-schedule</a> ｜ 官网源码：<a href="https://github.com/autotoolai/dianpingnote">GitHub 仓库</a></div>
 
 > **一句话答案**：排期要守住 3 条硬规则：一条笔记只由 1 个账号发、账号之间至少错开 30 分钟、内容和设备都要分开；多蓝 V 对应真实的多门店才健康，同店拆号只会互相压制。
 
@@ -104,6 +103,13 @@ sidebar: false
 - 素材的授权与合规——工具不替你负责。
 
 [点评笔记助手](https://dianping-note.aiautotools.com/) 的定位是这一层：多个蓝 V 的定时发布、笔记认领互不重复、失败原因留在本机。它把「执行」稳定下来，让你把注意力放回「内容」上。
+
+## 相关阅读
+
+这篇讲的是几个蓝 V 怎么排不打架。这几篇常被一起搜：
+
+- [点评笔记发布时间怎么选](best-publish-time)
+- [点评笔记没流量的原因排查](note-limited-traffic)
 
 ---
 

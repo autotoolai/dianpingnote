@@ -4,9 +4,11 @@ sidebar: false
 description: 联系我们：扫码加微信咨询点评笔记助手，说明你的蓝 V 数量和每月大概的发布条数，我们给出对应套餐与激活方式。
 ---
 
-<div class="zp-page-head">
-  <h1 class="zp-display">联系我们</h1>
-  <p>不用先填表，也不用等邮件回复。扫下面的二维码加微信，把情况说清楚就行。</p>
+<div class="zp-shell">
+  <div class="zp-page-head">
+    <h1 class="zp-display">联系我们</h1>
+    <p>不用先填表，也不用等邮件回复。扫下面的二维码加微信，把情况说清楚就行。</p>
+  </div>
 </div>
 
 <ContactWechat

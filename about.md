@@ -4,9 +4,11 @@ sidebar: false
 description: 关于点评笔记助手：我们是谁，产品定位，数据与隐私原则，技术栈与运行环境说明，以及联系方式。
 ---
 
-<div class="zp-page-head">
-  <h1 class="zp-display">关于点评笔记助手</h1>
-  <p>点评笔记助手（DianPingNote）是一款给点评门店用的 Windows 桌面软件：把「找素材 → 改内容 → 多号发布」这件事做成一条本机流水线。</p>
+<div class="zp-shell">
+  <div class="zp-page-head">
+    <h1 class="zp-display">关于点评笔记助手</h1>
+    <p>点评笔记助手（DianPingNote）是一款给点评门店用的 Windows 桌面软件：把「找素材 → 改内容 → 多号发布」这件事做成一条本机流水线。</p>
+  </div>
 </div>
 
 <div class="zp-answer">

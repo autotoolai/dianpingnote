@@ -2,12 +2,13 @@
 title: 点评笔记没流量的原因排查
 description: 点评笔记没有流量、发出去看不到、浏览量只有个位数的排查方法：内容重复、账号新号无权重、图片视频质量、标题写法、发布时间、违规限流状态、重新发还是改内容。
 keywords: 点评笔记没流量,点评笔记没曝光,点评限流,点评笔记排名,点评笔记不推荐,点评流量低
-sidebar: false
 ---
 
 # 点评笔记没流量的原因排查
 
-> 正式发布地址：[dianping-note.aiautotools.com/knowledge/note-limited-traffic](https://dianping-note.aiautotools.com/knowledge/note-limited-traffic) ｜ 官网源码：[GitHub 仓库](https://github.com/autotoolai/dianpingnote)
+<div class="zp-meta">本文正式地址：<a href="https://dianping-note.aiautotools.com/knowledge/note-limited-traffic">dianping-note.aiautotools.com/knowledge/note-limited-traffic</a> ｜ 官网源码：<a href="https://github.com/autotoolai/dianpingnote">GitHub 仓库</a></div>
+
+> 这篇讲的是**发出去但没流量**。如果是**笔记不见了、被折叠或搜不到**，看 [点评笔记被折叠或搜不到怎么办](note-folded-hidden)。
 
 > **一句话答案**：点评笔记没流量 9 成不是发得少，而是内容被判低质重复、账号本身没权重、或账号被限流；排查顺序是先查违规、再查重复、然后查图和标题，最后才看发布时间。
 
@@ -121,6 +122,14 @@ sidebar: false
 5. 还是不行，就换关键词搜，确认是折叠还是审核问题。
 
 工具能帮你做的部分：[点评笔记助手](https://dianping-note.aiautotools.com/) 可以把发布排期分散到多个蓝 V、失败自动重试、每条笔记的状态和失败原因留在本机，但**内容重不重复、标题好不好，只能你自己判断**——工具解决不了低质内容的根本问题。
+
+## 相关阅读
+
+这篇讲的是笔记发出去没流量。这几篇常被一起搜：
+
+- [点评笔记被折叠或搜不到怎么办](note-folded-hidden)
+- [点评笔记发布时间怎么选](best-publish-time)
+- [大众点评蓝 V 是什么：怎么开、怎么用](blue-v-what-is-it)
 
 ---
 

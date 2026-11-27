@@ -5,8 +5,8 @@
 **把「找素材 → 改内容 → 多号发布」做成一条本机流水线**
 
 [官网](https://dianping-note.aiautotools.com) ·
-[界面一览](https://dianping-note.aiautotools.com/screenshots) ·
-[在线体验](https://dianping-note.aiautotools.com/online-demo) ·
+[界面演示](https://dianping-note.aiautotools.com/screenshots) ·
+[在线演示](https://dianping-note.aiautotools.com/demo/) ·
 [定价](https://dianping-note.aiautotools.com/pricing) ·
 [帮助中心](https://dianping-note.aiautotools.com/guides/getting-started)
 
@@ -55,7 +55,7 @@
 | ![总览](public/images/screenshots/01-dashboard.webp) | ![设置](public/images/screenshots/08-settings-system.webp) |
 | 今日采集、二创、发布进度与待处理事项 | 开机启动、托盘驻留与软件授权 |
 
-> 完整逐页说明见官网 [界面一览](https://dianping-note.aiautotools.com/screenshots)。
+> 完整逐页说明见官网 [界面演示](https://dianping-note.aiautotools.com/screenshots)。
 
 ## 工作原理
 
@@ -112,7 +112,7 @@
 | 状态词典 | [状态与术语](https://dianping-note.aiautotools.com/guides/status-glossary) |
 | 常见问题 | [故障排查](https://dianping-note.aiautotools.com/guides/troubleshooting) |
 
-想先看效果：官网 [在线体验](https://dianping-note.aiautotools.com/online-demo) 提供假数据演示，界面与产品一致。
+想先看效果：官网 [在线演示](https://dianping-note.aiautotools.com/demo/) 提供假数据演示，界面与产品一致。
 
 ## 本地开发（官网）
 

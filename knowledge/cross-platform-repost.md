@@ -2,12 +2,11 @@
 title: 小红书内容搬到点评算不算违规
 description: 把小红书、抖音的视频和图文搬到大众点评发布是否违规：搬运的定义、平台对重复内容与水印的处理、点评侧的实际风险（降权、折叠、扣分）、安全改做的具体步骤、哪些素材可以放心用。
 keywords: 小红书搬点评,抖音搬点评,点评搬运违规,点评笔记重复内容,去水印发点评,跨平台搬运
-sidebar: false
 ---
 
 # 小红书内容搬到点评算不算违规
 
-> 正式发布地址：[dianping-note.aiautotools.com/knowledge/cross-platform-repost](https://dianping-note.aiautotools.com/knowledge/cross-platform-repost) ｜ 官网源码：[GitHub 仓库](https://github.com/autotoolai/dianpingnote)
+<div class="zp-meta">本文正式地址：<a href="https://dianping-note.aiautotools.com/knowledge/cross-platform-repost">dianping-note.aiautotools.com/knowledge/cross-platform-repost</a> ｜ 官网源码：<a href="https://github.com/autotoolai/dianpingnote">GitHub 仓库</a></div>
 
 > **一句话答案**：直接搬有风险，风险来自 3 件事叠加：内容重复、图上留着抖音或小红书的水印、多账号短时间集中发；去水印加重剪、换标题、补自己的门店信息，才能让内容指纹真正不一样。
 
@@ -105,6 +104,14 @@ sidebar: false
 - **差异化**：工具可以帮你去水印、改标题、加自己的信息（文案的自动改写就是这样用的），但**重剪视频、重新配图这种内容层面的差异化，还是需要人来做**，或者至少要人定方向。
 
 正确的工作方式是：**工具负责把「原始素材」高效地变成「待改造成本」**，改造成这一步才是决定能不能推流量的关键。
+
+## 相关阅读
+
+这篇讲的是搬运素材的合规风险。这几篇常被一起搜：
+
+- [点评笔记没流量的原因排查](note-limited-traffic)
+- [点评笔记被折叠或搜不到怎么办](note-folded-hidden)
+- [大众点评蓝 V 是什么：怎么开、怎么用](blue-v-what-is-it)
 
 ---
 

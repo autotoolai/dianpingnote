@@ -38,7 +38,8 @@ ARTICLE_DIRS = ['knowledge', 'guides']
 # 两份真源由 scripts/seo_config.mjs 的 pageAnswers 统一维护，门禁盯着它们不许漂移。
 TOP_PAGES = [
     'index.md', 'pricing.md', 'collect.md', 'erchuang.md', 'publish.md',
-    'screenshots.md', 'feature.md', 'get-started.md', 'online-demo.md', 'contact.md', 'about.md',
+    'screenshots.md', 'feature.md', 'get-started.md', 'contact.md', 'about.md',
+    'changelog.md', 'terms.md',
 ]
 
 # 顶层页的 frontmatter 没有 keywords 字段（词表在 seo_config.mjs 里），

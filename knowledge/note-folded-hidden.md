@@ -2,12 +2,13 @@
 title: 点评笔记被折叠或搜不到怎么办
 description: 大众点评笔记被折叠、搜不到、看不到的排查与处理：折叠和违规的区别、怎么确认自己这条是不是被处理了、几种常见成因（重复内容、带水印、敏感词、外链、批量行为）、逐项自查清单、处理顺序与多久能恢复。
 keywords: 点评笔记被折叠,点评笔记搜不到,点评内容不通过,点评笔记违规,点评折叠怎么恢复,点评笔记隐藏
-sidebar: false
 ---
 
 # 点评笔记被折叠或搜不到怎么办
 
-> 正式发布地址：[dianping-note.aiautotools.com/knowledge/note-folded-hidden](https://dianping-note.aiautotools.com/knowledge/note-folded-hidden) ｜ 官网源码：[GitHub 仓库](https://github.com/autotoolai/dianpingnote)
+<div class="zp-meta">本文正式地址：<a href="https://dianping-note.aiautotools.com/knowledge/note-folded-hidden">dianping-note.aiautotools.com/knowledge/note-folded-hidden</a> ｜ 官网源码：<a href="https://github.com/autotoolai/dianpingnote">GitHub 仓库</a></div>
+
+> 这篇讲的是**笔记不见了、被折叠或搜不到**。如果是**发出去还在但浏览量很低**，看 [点评笔记没流量的原因排查](note-limited-traffic)。
 
 > **一句话答案**：先分清是折叠还是违规：折叠查 5 项（重复内容、别家水印、敏感词、外链、批量发布），违规查后台违规记录并申诉；折叠期间越急着多发越难恢复，别删了重发同一条。
 
@@ -136,6 +137,13 @@ sidebar: false
 [点评笔记助手](https://dianping-note.aiautotools.com/) 的本地笔记池会保留每条笔记的状态流转记录，能帮你回溯「哪段时间、哪个账号、发了什么、结果如何」，这是判断规律的基础数据。
 
 **但内容层面的整改只能人来做**：哪句文案踩了词、哪个画面有水印、这条和上条像不像——工具不知道你的意图和素材来源。
+
+## 相关阅读
+
+这篇讲的是被折叠、被搜不到。这几篇常被一起搜：
+
+- [点评笔记没流量的原因排查](note-limited-traffic)
+- [小红书内容搬到点评算不算违规](cross-platform-repost)
 
 ---
 

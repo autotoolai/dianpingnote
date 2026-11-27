@@ -12,11 +12,14 @@ const hasDownload = computed(() => url.value.length > 0)
     <a class="zp-btn zp-btn--primary" :href="url" rel="noopener">下载 Windows 安装包</a>
     <span class="zp-hint">约 820 MB，内置 Chrome，无需另装浏览器。</span>
   </p>
-  <div v-else class="tip custom-block">
-    <p class="custom-block-title">下载地址</p>
-    <p>
-      安装包暂未公开下载。新用户可先通过
-      <a href="/get-started#contact">联系销售</a> 开通，试用期内会提供安装包；公开下载链接公布后，这里会变成按钮。
+  <div v-else class="zp-cta-row zp-cta-row--stack">
+    <p class="zp-hint">
+      安装包未公开直链下载。加微信后我们把安装包发给你，
+      装好首次打开自动获得 <strong>7 天试用 + 10 条发布额度</strong>。
+    </p>
+    <p class="zp-cta-row">
+      <a class="zp-btn zp-btn--primary" href="/contact">微信获取安装包</a>
+      <a class="zp-btn zp-btn--ghost" href="/demo/" target="_blank" rel="noopener">先看在线演示</a>
     </p>
   </div>
 </template>

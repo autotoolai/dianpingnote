@@ -8,12 +8,15 @@ description: 点评笔记助手是给门店运营用的 Windows 软件：把同�
 
 <HomeHero />
 
-<div class="zp-answer">
-  <p class="zp-answer__label">一句话答案</p>
-  <p class="zp-answer__text">点评笔记助手是一款 Windows 桌面软件：从小红书、抖音、快手、B站这 4 个平台采集笔记，本机改写文案、把标题叠到视频顶部或遮盖图文水印，再按每日定时发布到大众点评经营宝下的多个蓝 V。笔记、素材和发布状态全部保存在本机。</p>
+<div class="zp-shell">
+  <div class="zp-answer">
+    <p class="zp-answer__label">一句话答案</p>
+    <p class="zp-answer__text">点评笔记助手是一款 Windows 桌面软件：从小红书、抖音、快手、B站这 4 个平台采集笔记，本机改写文案、把标题叠到视频顶部或遮盖图文水印，再按每日定时发布到大众点评经营宝下的多个蓝 V。笔记、素材和发布状态全部保存在本机。</p>
+  </div>
 </div>
 
 <section class="zp-section">
+  <div class="zp-shell">
   <h2 class="zp-display">你只需要定三件事</h2>
   <p class="zp-section__lead">
     采谁的主页、每天几点发、发给哪几个号。剩下的下载、改写、排队、上传，电脑按顺序跑完。
@@ -52,9 +55,11 @@ description: 点评笔记助手是给门店运营用的 Windows 软件：把同�
       }
     ]"
   />
+  </div>
 </section>
 
 <section class="zp-section">
+  <div class="zp-shell">
   <h2 class="zp-display">它替你解决了什么</h2>
   <p class="zp-section__lead">做门店内容的精力，大多花在重复劳动上，而不是想选题上。</p>
   <FeatureCards
@@ -104,9 +109,11 @@ description: 点评笔记助手是给门店运营用的 Windows 软件：把同�
       }
     ]"
   />
+  </div>
 </section>
 
 <section class="zp-section">
+  <div class="zp-shell">
   <h2 class="zp-display">手工做，和交给它</h2>
   <p class="zp-section__lead">差别不在「能不能发出一条」，而在每天能不能稳定发出、发完知不知道结果。</p>
   <CompareTable
@@ -122,9 +129,11 @@ description: 点评笔记助手是给门店运营用的 Windows 软件：把同�
       { aspect: '素材存放', manual: '散在每个人的电脑里', ours: '统一在素材池，状态一目了然' }
     ]"
   />
+  </div>
 </section>
 
 <section class="zp-section">
+  <div class="zp-shell">
   <h2 class="zp-display">几个数字</h2>
   <StatRow
     :items="[
@@ -134,9 +143,11 @@ description: 点评笔记助手是给门店运营用的 Windows 软件：把同�
       { value: '在你电脑', label: '笔记、素材和发布记录的存放位置' }
     ]"
   />
+  </div>
 </section>
 
 <section class="zp-section">
+  <div class="zp-shell">
   <h2 class="zp-display">它适合谁</h2>
   <p class="zp-section__lead">
     如果下面几条里有两条以上是你现在的处境，那大概率能用得上。
@@ -165,20 +176,23 @@ description: 点评笔记助手是给门店运营用的 Windows 软件：把同�
   <p style="margin-top: 1.6rem">
     <a class="zp-btn zp-btn--ghost" href="/screenshots">看看真实界面</a>
     &nbsp;
-    <a class="zp-btn zp-btn--demo" href="/demo/" target="_blank" rel="noopener">在线体验</a>
+    <a class="zp-btn zp-btn--demo" href="/screenshots">界面演示</a>
     &nbsp;
     <a class="zp-btn zp-btn--ghost" href="/faq">看看常见问题</a>
     &nbsp;
     <a class="zp-btn zp-btn--ghost" href="/knowledge/">翻翻点评知识库</a>
   </p>
+  </div>
 </section>
 
-<CtaBand
-  title="先免费跑一条看看"
-  desc="新用户首次打开软件自动获得 7 天试用和 10 条额度，先把一条笔记完整发出去，再决定要不要继续。"
-/>
+<div class="zp-shell">
+  <CtaBand
+    title="先免费跑一条看看"
+    desc="新用户首次打开软件自动获得 7 天试用和 10 条额度，先把一条笔记完整发出去，再决定要不要继续。"
+  />
 
-<ContactWechat
-  title="联系我们"
-  desc="扫码加微信，把你的蓝 V 数量和每月大概的发布条数说一声，我们给你对应的套餐。"
-/>
+  <ContactWechat
+    title="联系我们"
+    desc="扫码加微信，把你的蓝 V 数量和每月大概的发布条数说一声，我们给你对应的套餐。"
+  />
+</div>

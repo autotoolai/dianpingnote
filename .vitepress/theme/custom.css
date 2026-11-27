@@ -41,8 +41,15 @@
 
   --vp-font-family-base: var(--dpn-sans);
   --vp-font-family-mono: var(--dpn-mono);
-  --vp-layout-max-width: 1440px;
+  --vp-layout-max-width: 1320px;
   --vp-sidebar-width: 268px;
+
+  /* 版式系统：页边天沟、内容栏宽、纵向节奏 */
+  --dpn-gutter: clamp(1.25rem, 4.4vw, 4.5rem);
+  --dpn-shell: 1180px;
+  --dpn-shell-wide: 1260px;
+  --dpn-measure: 44rem;
+  --dpn-rhythm: clamp(3.4rem, 6.5vw, 6rem);
 }
 
 .dark {
@@ -127,12 +134,16 @@ body {
 
 /* ---------- 排版基础 ---------- */
 
-.zp-home .VPDoc {
-  padding: 0 !important;
+/* 首页用 layout: page，DOM 里没有 VPDoc 容器，靠 .zp-shell 独立收口 */
+.zp-home .vp-doc {
+  padding: 0;
 }
 
-.zp-home .VPDoc .content-container {
-  max-width: 1140px !important;
+.zp-shell {
+  width: 100%;
+  max-width: var(--dpn-shell);
+  margin: 0 auto;
+  padding-inline: var(--dpn-gutter);
 }
 
 .zp-home .vp-doc h1,
@@ -183,7 +194,7 @@ body {
 
 .zp-hero {
   position: relative;
-  padding: clamp(3rem, 7vh, 5.2rem) 0 3.4rem;
+  padding: clamp(3.2rem, 8.5vh, 6.5rem) 0 clamp(3rem, 6.5vh, 5rem);
   overflow: hidden;
 }
 
@@ -216,10 +227,14 @@ body {
 .zp-hero__grid {
   position: relative;
   z-index: 1;
+  width: 100%;
+  max-width: var(--dpn-shell-wide);
+  margin: 0 auto;
+  padding-inline: var(--dpn-gutter);
   display: grid;
   /* 左窄右宽：标题让出空间给真实界面截图，比 50/50 更像杂志跨页 */
-  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-  gap: 3rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.04fr);
+  gap: clamp(2rem, 4vw, 3.6rem);
   align-items: center;
 }
 
@@ -257,9 +272,12 @@ body {
 
 .zp-hero h1 {
   margin: 0;
-  font-size: clamp(2.4rem, 5.6vw, 3.55rem);
+  /* 跟左栏宽度走，不是跟视口走：1600 屏上左栏也只有 450px 上下，
+     用 vw 会把 8 个字的标题挤成三行 */
+  font-size: clamp(2.15rem, 3.35vw, 3rem);
   font-weight: 700;
-  line-height: 1.22;
+  line-height: 1.24;
+  letter-spacing: 0.01em;
 }
 
 .zp-tagline {
@@ -394,8 +412,30 @@ body {
 /* ---------- 首页区块 ---------- */
 
 .zp-section {
-  padding: 3.6rem 0;
+  position: relative;
+  padding: var(--dpn-rhythm) 0;
   border-top: 1px solid var(--dpn-line);
+}
+
+/* 区块编号：像杂志的栏序，橙色等宽数字压在标题上方 */
+.zp-home {
+  counter-reset: zpsec;
+}
+
+.zp-section {
+  counter-increment: zpsec;
+}
+
+.zp-section::before {
+  content: '§ ' counter(zpsec, decimal-leading-zero);
+  display: block;
+  margin-bottom: 0.9rem;
+  font-family: var(--dpn-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--dpn-accent-deep);
+  opacity: 0.65;
 }
 
 .zp-section h2 {
@@ -421,8 +461,8 @@ body {
 }
 
 .zp-section__lead {
-  margin: 0 0 2rem;
-  max-width: 44rem;
+  margin: 0 0 2.4rem;
+  max-width: var(--dpn-measure);
   color: var(--dpn-muted);
   line-height: 1.9;
 }
@@ -435,6 +475,12 @@ body {
   gap: 1.6rem;
 }
 
+/* 步骤条里的短句不该在「分/配」这种地方断行 */
+.zp-workflow__step li {
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+
 @media (max-width: 900px) {
   .zp-workflow {
     grid-template-columns: 1fr;
@@ -444,7 +490,7 @@ body {
 
 .zp-workflow__step {
   position: relative;
-  padding: 1.6rem 1.5rem 1.3rem;
+  padding: 2rem 1.9rem 1.7rem;
   border-radius: 14px;
   background: var(--dpn-paper-2);
   border: 1px solid var(--dpn-line-soft);
@@ -483,8 +529,8 @@ body {
   margin: 0;
   padding-left: 1.05rem;
   color: var(--dpn-muted);
-  font-size: 0.91rem;
-  line-height: 1.8;
+  font-size: 0.9rem;
+  line-height: 1.85;
 }
 
 .zp-workflow__step ul li {
@@ -545,7 +591,7 @@ body {
   grid-column: span 2;
   display: flex;
   flex-direction: column;
-  padding: 1.6rem 1.6rem 1.5rem;
+  padding: 2rem 1.9rem 1.8rem;
   border-radius: 14px;
   background: var(--dpn-paper-2);
   border: 1px solid var(--dpn-line-soft);
@@ -625,7 +671,7 @@ body {
 
 .zp-compare th,
 .zp-compare td {
-  padding: 0.95rem 1.1rem;
+  padding: 1.1rem 1.3rem;
   text-align: left;
   vertical-align: top;
   border-bottom: 1px solid var(--dpn-line-soft);
@@ -693,7 +739,7 @@ body {
 
 .zp-stats > div {
   background: var(--dpn-paper-2);
-  padding: 1.4rem 1.4rem 1.3rem;
+  padding: 1.8rem 1.7rem 1.6rem;
 }
 
 .zp-stats b {
@@ -720,8 +766,8 @@ body {
 /* ---------- CTA 带 ---------- */
 
 .zp-band {
-  margin: 3rem 0 1.5rem;
-  padding: 2.6rem 2rem;
+  margin: 0 0 var(--dpn-rhythm);
+  padding: 3.4rem 2.6rem;
   border-radius: 18px;
   background: var(--dpn-ink);
   text-align: center;
@@ -888,7 +934,7 @@ body {
 }
 
 .zp-page-head {
-  padding: 2.2rem 0 0.8rem;
+  padding: 3rem 0 1rem;
 }
 
 .zp-page-head h1 {
@@ -898,9 +944,10 @@ body {
 }
 
 .zp-page-head p {
-  margin: 0.85rem 0 0;
-  max-width: 42rem;
+  margin: 0.9rem 0 0;
+  max-width: var(--dpn-measure);
   font-size: 1rem;
+  line-height: 1.9;
 }
 
 .zp-kbd {
@@ -981,7 +1028,7 @@ body {
    */
 
 .zp-answer {
-  margin: 1.4rem 0 2rem;
+  margin: 1.6rem 0 2.4rem;
   padding: 1.05rem 1.2rem;
   border-radius: 14px;
   background: var(--dpn-accent-wash);
@@ -1007,4 +1054,122 @@ body {
   font-size: 1rem;
   line-height: 1.85;
   color: var(--dpn-ink-soft) !important;
+}
+
+
+/* ---------- 版心与留白 ----------
+   这一节是本次改版的核心。
+   问题：首页用 layout: page，DOM 里没有 VPDoc 容器，
+   早先那条 `.zp-home .VPDoc { padding: 0 }` 从未生效也从未需要生效，
+   结果首页内容直接贴视口边缘，左右零留白。
+   做法：所有页面统一走 .zp-shell 收口，页边天沟用 clamp 随视口伸缩。
+   */
+
+/* ---------- 文档页版心 ----------
+   VitePress 自带的选择器带 [data-v-xxx] 属性限定，权重比普通类高，
+   例如 `.VPDoc.has-aside .content-container[data-v-e6f2a212]{max-width:688px}`。
+   直接写 `.VPDoc .content-container` 会被它盖掉，所以这里用重复类提权。
+   页面边距加在 VPDoc 自己身上（VitePress 默认 32px），不是 .container。 */
+.VPDoc {
+  padding-inline: var(--dpn-gutter) !important;
+  padding-top: 3rem !important;
+}
+
+/* 用 !important 压过 VitePress 自带的 scoped 规则
+   （.VPDoc.has-aside .content-container[data-v-xxx]{max-width:688px}）
+   注意：不能靠 .a.a 重复类提权，那要求同一元素有两个同名 class，不会命中。 */
+.VPDoc .content-container {
+  width: 100% !important;
+  max-width: calc(var(--dpn-shell) - var(--dpn-gutter) * 2) !important;
+  margin-inline: auto;
+}
+
+/* 文档页本身已经在 VPDoc 容器里，shell 不再二次收口 */
+.vp-doc .zp-shell {
+  max-width: 100%;
+  padding-inline: 0;
+}
+
+/* 首页区块用 .zp-shell 收口；文档页区块保持满栏，靠上面那条限宽兜底 */
+.zp-section .zp-shell,
+.zp-home .zp-shell {
+  width: 100%;
+}
+
+/* Hero 的暖光团稍微收一点，别糊到页面边缘 */
+.zp-hero__bg {
+  inset: -30% -6% auto;
+}
+
+/* 首屏标题在窄屏下留出更多呼吸 */
+@media (max-width: 640px) {
+  .zp-hero {
+    padding-top: 2.8rem;
+  }
+
+  .zp-section {
+    padding: 3rem 0;
+  }
+
+  .zp-workflow__step,
+  .zp-card {
+    padding: 1.5rem 1.4rem 1.4rem;
+  }
+}
+
+/* 平板横向滚动的对比表：边缘做渐隐提示，而不是硬切 */
+.zp-compare-wrap {
+  position: relative;
+}
+
+@media (max-width: 700px) {
+  .zp-compare-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .zp-compare {
+    min-width: 620px;
+  }
+}
+
+
+/* ---------- 元信息条 ----------
+   知识库文章开头的「正式地址 ｜ 官网源码」是给 AI 抓取用的实体声明，
+   但它原先是普通引用块，跟正文抢注意力，还挤成三行。
+   改成一行小字，链接照旧可点，声明不丢。 */
+.zp-meta {
+  margin: 0 0 1.6rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--dpn-line-soft);
+  background: var(--dpn-paper-2);
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: var(--dpn-muted);
+  word-break: break-all;
+}
+
+.zp-meta a {
+  color: var(--dpn-accent-deep) !important;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.zp-meta a:hover {
+  text-decoration: underline;
+}
+
+/* 知识库文章正文行距放宽，长文更好读 */
+.vp-doc h2 {
+  margin-top: 2.6rem;
+}
+
+.vp-doc h3 {
+  margin-top: 2rem;
+}
+
+.vp-doc p,
+.vp-doc li {
+  line-height: 1.9;
 }

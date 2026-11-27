@@ -2,12 +2,11 @@
 title: 大众点评蓝 V 是什么：怎么开、怎么用
 description: 大众点评蓝 V 是什么：蓝 V 与普通用户账号的区别、蓝 V 的开通条件与流程、蓝 V 能发什么内容、多个蓝 V 怎么分工、开通前要准备的材料与常见被拒原因。
 keywords: 大众点评蓝 V,点评蓝 V 是什么,蓝 V 怎么开通,点评商家认证,大众点评经营宝,蓝 V 笔记发布
-sidebar: false
 ---
 
 # 大众点评蓝 V 是什么：怎么开、怎么用
 
-> 正式发布地址：[dianping-note.aiautotools.com/knowledge/blue-v-what-is-it](https://dianping-note.aiautotools.com/knowledge/blue-v-what-is-it) ｜ 官网源码：[GitHub 仓库](https://github.com/autotoolai/dianpingnote)
+<div class="zp-meta">本文正式地址：<a href="https://dianping-note.aiautotools.com/knowledge/blue-v-what-is-it">dianping-note.aiautotools.com/knowledge/blue-v-what-is-it</a> ｜ 官网源码：<a href="https://github.com/autotoolai/dianpingnote">GitHub 仓库</a></div>
 
 > **一句话答案**：大众点评蓝 V 就是商家身份账号，开通靠营业执照、行业资质、门店实拍等材料做认证，1 个门店主体对应 1 个蓝 V；多蓝 V 应该对应多门店，而不是同一家店重复刷。
 
@@ -85,6 +84,14 @@ sidebar: false
 蓝 V 有了，接下来就是内容。真正决定能不能被推荐的，是**笔记本身的质量和账号的历史表现**，这两件事下一篇讲：[点评笔记没流量的原因排查](note-limited-traffic)。
 
 工具上，多蓝 V 一次发多条、错峰排期、失败自动重试这类事，可以交给 [点评笔记助手](https://dianping-note.aiautotools.com/) 在本机跑，不用守着浏览器一个个点。
+
+## 相关阅读
+
+这篇讲的是蓝 V 是什么、怎么开通。这几篇常被一起搜：
+
+- [点评笔记没流量的原因排查](note-limited-traffic)
+- [多蓝 V 发布怎么排期](multi-account-schedule)
+- [小红书内容搬到点评算不算违规](cross-platform-repost)
 
 ---
 
